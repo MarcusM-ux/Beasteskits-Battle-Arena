@@ -1,9 +1,9 @@
 const menuTHEMES = [
-    new Audio('../Music/THEME/menuTheme1.mp3')
+    new Audio('../Music/THEME/Menu/theme1.mp3')
 ]
 
 const battleTHEMES = [
-    new Audio('../Music/THEME/battleTheme1.mp3')
+    new Audio('../Music/THEME/Battle/theme1.mp3')
 ]
 
 menuTHEMES.forEach(audio => audio.volume = 0.5)

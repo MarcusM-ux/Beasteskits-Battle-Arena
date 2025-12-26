@@ -208,9 +208,13 @@ const attackFunctions = {
                 }else {
                     newFireball.y += Math.ceil(Math.random() * 50) + 1
                 }
-                newFireball.x += Math.ceil(Math.random() * 25) + 1
                 
                 let facingRight = player.facingRight
+                if (facingRight) {
+                    newFireball.x += player.width
+                } else {
+                    newFireball.x -= player.width
+                }
                 
                 let life = 0
                 let fireBallInterval = setInterval(() => {

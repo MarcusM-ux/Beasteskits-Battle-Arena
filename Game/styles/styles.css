@@ -17,7 +17,7 @@ canvas{
     border: dashed black 0.5rem;
 }
 
-#main-menu, #button-frames {
+#main-menu {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -27,16 +27,26 @@ canvas{
     position: relative;
     overflow: hidden;
 }
+#button-frames {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: scroll;
+}
 #menu-holder {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 5vw;
+    /* gap: ; */
 }
 #menu-button-container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    /* gap: 3rem; */
     z-index: 10;
 }
 
@@ -134,6 +144,26 @@ canvas{
 }
 
 /* CLASSES */
+.button-frame {
+    overflow: scroll;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5rem;
+    font-size: 3vw;
+    text-align: center;
+    color: lavender;
+}
+.response {
+    /* margin: 10rem 0 10rem 0; */
+    /* margin-top: 12rem; */
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
 .attack-display{
     display:none; 
     width: 25vw; 
@@ -187,12 +217,18 @@ canvas{
     border: none; 
     background: none; 
     color: white;
+    margin-bottom: 2rem;
+    font-weight: bold;
 }
 .creature-type{
     font-size: 4vh;
     font-weight: bold; 
     position: relative;
     bottom: 0;
+    background-color: #9e55bd;
+    border: solid black 0.5rem;
+    border-radius: 12rem;
+    padding: 0.5rem;
 }
 .type-element{
     margin: 2rem
@@ -288,14 +324,20 @@ canvas{
     z-index: 11;
 }
 .menu-button {
-    background-color: lavender;
-    color: purple;
-    font-size: clamp(2rem, 3vw, 4vw);
-    padding: 0.5rem;
+    background-image: url('/Images/button-card.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 10em;          /* scales with font-size */
+    height: 4em;          /* scales with font-size */
+    background-color: transparent;
+    font-size: 2.5em;       /* can adjust this */
+    border-radius: 2em;
     cursor: pointer;
-    border-radius: 5rem;
-    border: 0.4rem solid black;
     transition: all 0.1s ease;
+    color: lavender;
+    border: none;
+    font-weight: 900;
 }
 .menu-button:hover {
     transform: scale(1.05);
