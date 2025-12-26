@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    scrollbar-width: none;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    background-color: rgb(100, 0, 155);
+}
+
+canvas{
+    border: dashed black 0.5rem;
+}
+
+#main-menu, #button-frames {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+#menu-holder {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5vw;
+}
+#menu-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    z-index: 10;
+}
+
+#subcreature-frame {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100vw;
+    height: 100vh;
+}
+
+#creature-battle-frame{
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: center; 
+    gap: 2rem;
+}
+
+#creature-selection-frame {
+    width: 55vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgb(100, 0, 155);
+    border-top-right-radius: 5rem;
+    border-top-left-radius: 5rem;
+    border: solid black 0.5rem;
+}
+
+#player-turn-selection {
+    color: blue; 
+    border-left: solid black 0.5rem;
+    border-right: solid black 0.5rem; 
+    background-color: white; 
+    border-top-right-radius: 5rem; 
+    border-top-left-radius: 5rem; 
+    padding: 1rem 1rem 0 1rem;
+}
+
+#creature-selection-holder {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    overflow: auto;
+    scrollbar-width: none;
+    border-top-right-radius: 5rem;
+    border-top-left-radius: 5rem;
+    border-top: solid black 0.5rem;
+}
+
+#typeChartDisplay,
+#attacksCatalog,
+#beasteskitStatusDisplay {
+    max-width: 30vw;
+    height: 80vh;
+    font-size: clamp(1.2rem, 2vw, 10rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-top-left-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+    border: solid black 0.5rem;
+    padding: 2rem;
+    overflow: scroll;
+    background-color: rgb(100, 0, 155);
+    scrollbar-color: black black;
+    scrollbar-width: none;
+}
+
+#winner-heading {
+    color: yellow;
+    display: none;
+    position: absolute;
+    z-index: 2;
+}
+#page-buttons-holder{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#dark-transition {
+    width: 100vw; 
+    height: 100vh; 
+    display: none; 
+    position: absolute; 
+    z-index: 1; 
+    background-color: purple;
+}
+
+/* CLASSES */
+.attack-display{
+    display:none; 
+    width: 25vw; 
+    font-size: 1.5rem; 
+    flex-direction: column; 
+    gap: 2rem; 
+    text-align: center; 
+    overflow: scroll;
+}
+.creature-frame-button{
+    font-size: clamp(1rem, 2vw, 4vw);
+    padding: 2rem;
+    cursor: pointer;
+    color: #9e55bd;
+    background: black;
+    border-radius: 10rem;
+}
+.home-screen-button{
+    pointer-events: all;
+    font-size: 5vw;
+    width: 8vw;
+    height: auto;
+    background: red;
+    border: solid black 0.5rem;
+    border-radius: 10rem;
+    cursor: pointer;
+    margin: 2rem;
+}
+
+.creature-box{
+    width: 16rem;
+    min-height: 10rem; 
+    max-height: 25rem; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    background-image: url('/Images/card.png'); 
+    background-size: 100% 100%; 
+    background-repeat: no-repeat; 
+    background-size: fixed;
+}
+
+.creature-chooseButton{
+    width: 100%;
+    font-size: 5vh;
+    position: relative;
+    top: 15px; 
+    cursor: pointer; 
+    transition: all ease 0.5s 1s;
+    border: none; 
+    background: none; 
+    color: white;
+}
+.creature-type{
+    font-size: 4vh;
+    font-weight: bold; 
+    position: relative;
+    bottom: 0;
+}
+.type-element{
+    margin: 2rem
+}
+
+.grid-style-attacks{
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+    list-style: none; 
+    padding: 0;
+}
+
+.player-heading{
+    text-align:center; 
+    font-size: 1.9rem; 
+    margin: 1rem 1rem;
+    font-weight: bold;
+}
+.display-health {
+    text-align: center;
+    position: relative;
+    background-color: black;
+    border-radius: 5rem;
+}
+.display-alert{
+    width: auto;
+}
+
+.page {
+    width: 100%;
+    height: auto;
+    overflow: scroll;
+    display: none;
+}
+.page-button{
+    background: white;
+    color: purple;
+    border: 0.5rem solid black;
+    font-size: 3vw;
+    cursor: pointer;
+}
+.status-list {
+    font-size: 2vw;
+    margin: 1.5rem;
+}
+.attacks-display {
+    width: 25vw;
+    height: 90vh;
+    flex-direction: column;
+    text-align: center;
+    overflow-y: scroll;
+    gap: 0.5rem;
+}
+.status-div {
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+.status-heading {
+    font-size: 3vw; 
+    align-self: flex-start;
+}
+.center-text {
+    text-align: center;
+}
+.remove-list-style {
+    list-style-type: none;
+}
+.top-bar {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.top-bar-close {
+    align-self: flex-start;
+}
+
+.top-bar-logo {
+    position: relative;
+}
+
+.menu-logo {
+    margin: auto;
+    transform: rotate(-5deg);
+    z-index: 11;
+}
+.menu-button {
+    background-color: lavender;
+    color: purple;
+    font-size: clamp(2rem, 3vw, 4vw);
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5rem;
+    border: 0.4rem solid black;
+    transition: all 0.1s ease;
+}
+.menu-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.flex-status{
+    display: flex; 
+    justify-content: space-evenly; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    gap: 1rem;
+}
+.flex-status-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+.background-fade-img {
+    background-image: url('/Images/background.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.decoration {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+
+.top {
+    top: 0.2rem;
+    background-image: url('../top_decores.png');
+}
+
+.bottom {
+    bottom: 0.2rem;
+    background-image: url('../bottom_decores.png');
+}
+
+/* ANIMATIONS */
+.bounceIn {
+    animation: bounceIn 2.5s ease forwards;
+}
+
+@keyframes bounceIn {
+    0% {
+        font-size: 1vw;
+    }
+    50% {
+        opacity: 1;
+        font-size: 3vw;
+    }
+    70% {
+        font-size: 4vw;
+    }
+    100% {
+        font-size: 5vw;
+    }
+}
+
+.slideUp {
+    animation: slideUp 6.5s ease-out forwards;
+    animation-delay: 0.5s;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@keyframes slideUp {
+    0% {
+        transform: translate(-50%, 100vh);
+    }
+    100% {
+        transform: translate(-50%, -100vh);
+    }
+}

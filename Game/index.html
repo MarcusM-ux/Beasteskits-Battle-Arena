@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absolute Beasteskits Battle Arena</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+    <main id="main-menu" class="background-fade-img">
+        <section id="menu-holder">
+            <img src="../Images/logo.png" class="menu-logo" width="920" height="620">
+            <div id="menu-button-container">
+                <button class="menu-button" id="menu-button-selection">Beasteskit Selection</button>
+                <button class="menu-button" id="menu-button-tutorial">Tutorial</button>
+                <button class="menu-button" id="menu-button-credits">Credits</button>
+                <button class="menu-button" id="menu-button-socials">Socials</button>
+            </div>
+        </section>
+    </main>
+
+    <main id="button-frames" style="display: none;">
+        <section id='tutorial-screen' class='button-frame'>
+            <button class='home-screen-button'>X</button>
+
+            <video>
+                <source>
+            </video>
+        </section>
+
+        
+        <section id='credit-screen' class='button-frame'>
+            <button class='home-screen-button'>X</button>
+            
+            <div id='content'>
+                <h2>
+                    Scripter, Pixel Artist, SFX Maker: Marco Dev
+                </h2>
+            </div>
+        </section>
+    </main>
+
+    <main id="creature-frame" style="display: none;" class="background-fade-img">
+        <section id="subcreature-frame">
+
+            <div class="top-bar">
+                <button class="home-screen-button top-bar-close">X</button>
+                <img id="logo" class="top-bar-logo" src="/Images/logo.png" width="200" height="130">
+            </div>
+
+            <div class='flex-status-column'>
+                <button class='creature-frame-button' id='toggleTypeChart'>Open Type Chart</button>
+                <button class='creature-frame-button' id='toggleBeastStatus'>Open Beasteskit Stats</button>
+                <button class='creature-frame-button' id='toggleattacksCatalog'>Open Attacks Descriptions</button>
+            </div>
+
+            <ui id="attacksCatalog" style="display: none;">
+                <h2 class="center-text">Moves</h2>
+            
+                <div class="center-text remove-list-style" id="attacks-type-container"></div>
+            </ui>
+            
+            <ul id='typeChartDisplay' style='display: none;'>
+                <h2 class="center-text">Type Chart</h2>
+                
+                <div class="center-text remove-list-style" id='content-type-container'>
+                </div>
+            </ul>
+
+            <div id='beasteskitStatusDisplay' style="display: none;">
+
+                <div id='header' class="center-text">
+                    <h2 id='name-display' style='font-size: 3vw;'>Please Select A Beasteskit</h2>
+                    <h3 id='type-display'>Type: </h3>
+                    <img id='image-display' src=''>
+                </div>
+
+                <div class='status-div'>
+                    <h2 class='status-heading'>* Stats</h2>
+                    <ul id='status-display'>
+                        <li class='status-list'>hp: </li>
+                        <li class='status-list'>atk: </li>
+                        <li class='status-list'>def: </li>
+                        <li class='status-list'>spd: </li>
+                        
+                    </ul>
+                </div>
+
+                <div class='status-div'>
+                    <h2 class="status-heading">* Attacks</h2>
+                    <ul id='attacks-display'>
+                        <li class='status-list'>attack: </li>
+                        <li class='status-list'>attack: </li>
+                        <li class='status-list'>attack: </li>
+                        <li class='status-list'>attack: </li>
+                    </ul>
+                </div>
+            </div>
+
+            <section id='creature-selection-frame'>
+                <h1 id='player-turn-selection'>Player One, Choose Your Creature!</h1> 
+    
+                <div id='creature-selection-holder'>
+                </div>
+
+                <div id='page-buttons-holder'>
+                    <button id='last-page' class='page-button'>Last Page</button>
+                    <button id='next-page' class='page-button'>Next Page</button>
+                </div>
+            </section>
+
+        </section>
+
+    </main>
+
+    <main id="creature-battle-frame" style="display: none;">
+        <div class='attack-display'>
+
+            <p id='player1-hp' class="display-health">Exsis: HP 100/100</p>
+            <p id='player1-label' class="display-alert"></p>
+            
+            <p class="player-heading">Player One Attacks</p>
+            <div>
+                <ul id='list-attacks-player1' class='grid-style-attacks'></ul>                      
+            </div>
+        </div>
+
+        <h1 id='winner-heading'>Winner: Player One's Bloshrimp</h1>
+        <canvas></canvas>
+
+        <div class='attack-display'>
+            <p id='player2-hp' class="display-health">Exsis: HP 100/100</p>
+            <p id='player2-label' class="display-alert"></p>
+            
+            <p class="player-heading">Player One Attacks</p>
+            <div>
+                <ul id='list-attacks-player2' class='grid-style-attacks'></ul>                      
+            </div>
+        </div>
+    </main>
+    <div id="dark-transition"></div>
+
+    <script src="./scripts/music.js"></script>
+    <script src="./scripts/attack_descriptions.js"></script>
+    <script src="./scripts/gameplay_functions.js"></script>
+    <script src="./scripts/gameplay_objects.js"></script>
+    <script src="./scripts/gameplay_attacks.js"></script>
+    <script src="./scripts/gameplay_core.js"></script>
+    <script src="./scripts/html_functionality.js"></script>
+</body>
+</html>
