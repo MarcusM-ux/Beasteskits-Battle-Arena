@@ -29,7 +29,7 @@ const keybinds = {
 }
 
 function retreiveImage(name){
-    return `/PixelArt/BeasteskitsCatalog/${name}.png`
+    return `../../PixelArt/BeasteskitsCatalog/${name}.png`
 }
 
 const creatures = {

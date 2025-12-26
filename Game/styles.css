@@ -201,7 +201,7 @@ canvas{
     flex-direction: column; 
     justify-content: center; 
     align-items: center; 
-    background-image: url('/Images/card.png'); 
+    background-image: url('../Images/card.png'); 
     background-size: 100% 100%; 
     background-repeat: no-repeat; 
     background-size: fixed;
@@ -324,7 +324,7 @@ canvas{
     z-index: 11;
 }
 .menu-button {
-    background-image: url('/Images/button-card.png');
+    background-image: url('../Images/button-card.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -342,6 +342,7 @@ canvas{
 .menu-button:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    color: #ec44fc;
 }
 
 .flex-status{
@@ -360,7 +361,7 @@ canvas{
     gap: 1rem;
 }
 .background-fade-img {
-    background-image: url('/Images/background.png');
+    background-image: url('../Images/background.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -375,7 +376,7 @@ canvas{
     background-size: contain;
 }
 
-.top {
+/* .top {
     top: 0.2rem;
     background-image: url('../top_decores.png');
 }
@@ -383,7 +384,7 @@ canvas{
 .bottom {
     bottom: 0.2rem;
     background-image: url('../bottom_decores.png');
-}
+} */
 
 /* ANIMATIONS */
 .bounceIn {
