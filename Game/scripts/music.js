@@ -1,86 +1,94 @@
-const menuTHEMES = [
-    new Audio('../Music/THEME/Menu/theme1.mp3')
-]
+// --- CONFIGURATION ---
+const maxMenuSongs = 3;    // Number of menu tracks
+const maxBattleSongs = 3;  // Number of battle tracks
+const defaultVolume = 0.5; // Default volume for all tracks
 
-const battleTHEMES = [
-    new Audio('../Music/THEME/Battle/theme1.mp3')
-]
+// --- ARRAYS TO STORE AUDIO OBJECTS ---
+const menuTHEMES = [];
+const battleTHEMES = [];
 
-menuTHEMES.forEach(audio => audio.volume = 0.5)
-battleTHEMES.forEach(audio => audio.volume = 0.5)
+// --- POPULATE MENU TRACKS ---
+for (let i = 1; i <= maxMenuSongs; i++) {
+    const audio = new Audio(`../Music/THEME/Menu/theme${i}.mp3`);
+    audio.volume = defaultVolume;
+    menuTHEMES.push(audio);
+}
 
+// --- POPULATE BATTLE TRACKS ---
+for (let i = 1; i <= maxBattleSongs; i++) {
+    const audio = new Audio(`../Music/THEME/Battle/theme${i}.mp3`);
+    audio.volume = defaultVolume;
+    battleTHEMES.push(audio);
+}
+
+// --- FADE FUNCTION ---
 function fadeAudio(audio, targetVolume, duration = 1000) {
-    const stepTime = 50
-    const steps = duration / stepTime
-    const volumeStep = (targetVolume - audio.volume) / steps
+    const stepTime = 50;
+    const steps = duration / stepTime;
+    const volumeStep = (targetVolume - audio.volume) / steps;
 
     const fadeInterval = setInterval(() => {
-        audio.volume = Math.min(1, Math.max(0, audio.volume + volumeStep))
+        audio.volume = Math.min(1, Math.max(0, audio.volume + volumeStep));
 
         if (
             (volumeStep > 0 && audio.volume >= targetVolume) ||
             (volumeStep < 0 && audio.volume <= targetVolume)
         ) {
-            audio.volume = targetVolume
-            clearInterval(fadeInterval)
+            audio.volume = targetVolume;
+            clearInterval(fadeInterval);
         }
-    }, stepTime)
+    }, stepTime);
 }
 
-function pauseAllThemes(name){
-    switch(name){
-        case 'menu':
-            menuTHEMES.forEach(audio => {
-                audio.pause()
-                audio.currentTime = 0
-                audio.onended = null
-            })
-        break
-        case 'battle':
-            battleTHEMES.forEach(audio => {
-                audio.pause()
-                audio.currentTime = 0
-                audio.onended = null
-            })
-        break
-    }
+// --- PAUSE ALL TRACKS OF A TYPE ---
+function pauseAllThemes(type) {
+    const themes = type === 'menu' ? menuTHEMES : battleTHEMES;
+    themes.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.onended = null;
+    });
 }
 
-function startTheme(name){
-    const themes = (name === 'menu') ? menuTHEMES : battleTHEMES
-    if (themes.length === 0) return
+// --- START RANDOM THEME LOOP ---
+function startTheme(type) {
+    const themes = type === 'menu' ? menuTHEMES : battleTHEMES;
+    if (themes.length === 0) return;
 
-    let index = Math.floor(Math.random() * themes.length)
+    let index = Math.floor(Math.random() * themes.length);
 
-    function playNext(){
-        const current = themes[index]
-        current.play()
+    function playNext() {
+        const current = themes[index];
+        current.play();
 
         current.onended = () => {
-            current.currentTime = 0
-            index = (index + 1) % themes.length
-            playNext()
-        }
+            current.currentTime = 0;
+            index = (index + 1) % themes.length;
+            playNext();
+        };
     }
 
-    playNext()
+    playNext();
 }
 
-function toggleTHEMES(isMenuTheme){
-    if (isMenuTheme){
-        pauseAllThemes('battle')
-        startTheme('menu')
+// --- TOGGLE BETWEEN MENU AND BATTLE ---
+function toggleTHEMES(isMenuTheme) {
+    if (isMenuTheme) {
+        pauseAllThemes('battle');
+        startTheme('menu');
     } else {
-        pauseAllThemes('menu')
-        startTheme('battle')
+        pauseAllThemes('menu');
+        startTheme('battle');
     }
 }
 
-function startMusic(){
+// --- START MUSIC ON FIRST INTERACTION ---
+function startMusic() {
     window.removeEventListener('click', startMusic);
     window.removeEventListener('keydown', startMusic);
-    toggleTHEMES(true)
+    toggleTHEMES(true);
 }
 
+// --- LISTEN FOR FIRST CLICK OR KEYPRESS ---
 window.addEventListener('click', startMusic);
 window.addEventListener('keydown', startMusic);
