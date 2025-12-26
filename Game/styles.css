@@ -121,7 +121,11 @@ canvas{
     scrollbar-color: black black;
     scrollbar-width: none;
 }
-
+#sudden-death-timer {
+    color: red;
+    position: absolute;
+    top: 6px;
+}
 #winner-heading {
     color: yellow;
     display: none;
@@ -174,12 +178,20 @@ canvas{
     overflow: scroll;
 }
 .creature-frame-button{
-    font-size: clamp(1rem, 2vw, 4vw);
-    padding: 2rem;
+    background-image: url('../Images/pure-card.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 10em;          /* scales with font-size */
+    height: 4em;          /* scales with font-size */
+    background-color: transparent;
+    font-size: 2.5em;       /* can adjust this */
+    border-radius: 2em;
     cursor: pointer;
-    color: #9e55bd;
-    background: black;
-    border-radius: 10rem;
+    transition: all 0.1s ease;
+    color: black;
+    border: none;
+    font-weight: 900;
 }
 .home-screen-button{
     pointer-events: all;
@@ -339,10 +351,14 @@ canvas{
     border: none;
     font-weight: 900;
 }
-.menu-button:hover {
+.menu-button:hover, .creature-frame-button:hover {
+    background-image: url('../Images/pure-card.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-    color: #ec44fc;
+    color: black;
 }
 
 .flex-status{

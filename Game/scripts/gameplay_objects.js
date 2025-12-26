@@ -28,15 +28,11 @@ const keybinds = {
     
 }
 
-function retreiveImage(name){
-    return `../../PixelArt/BeasteskitsCatalog/${name}.png`
-}
-
 const creatures = {
     Abysmouth : {
         image: retreiveImage('Abysmouth'),
         stats: {hp: 65, atk: 43, def: 70, spd: 1},
-        moveset: ['CHOMP', 'DODGE', 'HARDEN', 'BITE'],
+        moveset: ['CHOMP', 'DASH', 'HARDEN', 'BITE'],
         type: 'Dark'
     },
     Exsis : {
@@ -54,25 +50,25 @@ const creatures = {
     Magmos : {
         image: retreiveImage('Magmos'),
         stats: {hp: 50, atk: 70, def: 60, spd: 0.5},
-        moveset: ['CHOMP', 'DODGE', 'FIREBOLT'],
+        moveset: ['CHOMP', 'DASH', 'FIREBOLT'],
         type: 'Fire'
     },
     Stressnock : {
         image: retreiveImage('Stressnock'),
         stats: {hp: 63, atk: 53, def: 62, spd: 2},
-        moveset: ['CHOMP', 'DODGE', 'SHADOW STEP'],
+        moveset: ['CHOMP', 'DASH', 'SHADOW STEP'],
         type: 'Dark'
     },
     Puffblitz : {
         image: retreiveImage('Puffblitz'),
         stats: {hp: 40, atk: 35, def: 26, spd: 4},
-        moveset: ['WIND SLASH', 'WIND MILL', 'BITE', 'DODGE'],
+        moveset: ['WIND SLASH', 'WIND MILL', 'BITE', 'DASH'],
         type: 'Air'
     },
     Motomech : {
         image:  retreiveImage('Motomech'),
         stats: {hp: 60, atk: 45, def: 56, spd: 2},
-        moveset: ['BEAM', 'DECONSTRUCT', 'CLAMP', 'DODGE'],
+        moveset: ['BEAM', 'DECONSTRUCT', 'CLAMP', 'DASH'],
         type: 'Metal'
     },
     Bornvee : {

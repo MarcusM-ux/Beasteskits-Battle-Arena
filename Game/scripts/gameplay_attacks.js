@@ -1,6 +1,22 @@
 const attackFunctions = {
     CHOMP: {stats: { dmg: 5, type: 'Dark', cooldown: { time: 5000, switch: false }}, action: (player, target) => {
             const attackStats = attackFunctions.CHOMP.stats
+
+            function spawnImage(imageName, box, {playAudioOnHit = false, audioName = null, target = null}){
+                const image = new Image()
+                image.src = retreiveEffect(imageName)
+                image.onload = () => {
+                    imageEffect(image, box.x, box.y, box.width, box.height, box.duration, !player.facingRight, false)
+                }
+                if (playAudioOnHit) {
+                    if (checkCollision(box, target)){
+                        const audio = new Audio()
+                        audio.src = retreiveAudio('bite')
+                        audio.play()
+                    }
+                }
+            }
+
             let box = {
                 x: player.x,
                 y: player.y,
@@ -9,8 +25,9 @@ const attackFunctions = {
                 color: 'black',
                 dmg: attackStats.dmg,
                 type: 'Dark', 
-                duration: 500
+                duration: 500,
             }
+
             stun(player, box.duration)
 
             if (player.facingRight) {
@@ -19,23 +36,34 @@ const attackFunctions = {
                 box.x = player.x - player.width
             }
 
-            spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+            spawnImage('fangs', box, {
+                playAudioOnHit: true,
+                audioName: 'bite',
+                target: target
+            })
 
             if (checkCollision(box, target)) {
                 stun(target, box.duration / 2)
                 attackResults(player, box, target)
             }
+
         }
     },
 
-    DODGE: {stats: { type: 'Basic', cooldown: { time: 5000, switch: false }}, action: (player) => {
+    DASH: {stats: { type: 'Basic', cooldown: { time: 5000, switch: false }}, action: (player) => {
+            // const img = new Image()
+            // img.src = retreiveEffect('dash')
+            // const audio = new Audio()
+            // audio.src = retreiveAudio('whoosh')
             let box = {
                 x: player.x,
                 y: player.y,
                 width: player.width,
                 height: player.height,
                 color: 'white',
-                duration: 1000
+                duration: 1000,
+                // img,
+                // audio
             }
 
             if ((keybinds.movement.w && player.isPlayer1) || (keybinds.movement.arrowup && !player.isPlayer1)) {
@@ -57,7 +85,7 @@ const attackFunctions = {
             }
             spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
             stun(player, box.duration / 2)
-            player.indicate(`${player.name} dodged!`)
+            player.indicate(`${player.name} dashed!`)
         }
     },
     

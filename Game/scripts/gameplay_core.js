@@ -713,6 +713,31 @@ function player2Checks(playerTwo, target){
    
 }
 
+function drawImageEffect(effect) {
+    ctx.save()
+
+    // Move origin to center of image
+    ctx.translate(
+        effect.x + effect.width / 2,
+        effect.y + effect.height / 2
+    )
+
+    // Apply flips
+    const scaleX = effect.flipX ? -1 : 1
+    const scaleY = effect.flipY ? -1 : 1
+    ctx.scale(scaleX, scaleY)
+
+    // Draw image centered
+    ctx.drawImage(
+        effect.image,
+        -effect.width / 2,
+        -effect.height / 2,
+        effect.width,
+        effect.height
+    )
+
+    ctx.restore()
+}
 
 function animation(){
     if (stopAnimation){
@@ -749,9 +774,18 @@ function animation(){
         players.forEach(player => {
             noCollision(player, object)
         })
-        
     })
     
+    for (let i = activeImages.length - 1; i >= 0; i--) {
+        const effect = activeImages[i]
+
+        if (now > effect.expiry) {
+            activeImages.splice(i, 1)
+        } else {
+            drawImageEffect(effect)
+        }
+    }
+
     const playerOne = challengers.player1.creature
     const playerTwo = challengers.player2.creature
     if (playerOne && playerTwo){

@@ -6,6 +6,29 @@ function spawnEffect(x, y, width, height, color, duration = 2000){
     })
 }
 
+const activeImages = []
+function imageEffect(
+    image,
+    x,
+    y,
+    width,
+    height,
+    duration = 2000,
+    flipX = false,
+    flipY = false
+) {
+    activeImages.push({
+        image,
+        x,
+        y,
+        width,
+        height,
+        flipX,
+        flipY,
+        expiry: Date.now() + duration
+    })
+}
+
 function determineStatus(attackType, targetType){
     const chart = typeChart[attackType]
     
@@ -246,4 +269,16 @@ function colorFromType(type){
             return 'brown'
         break
     }
+}
+
+function retreiveImage(name){
+    return `../../PixelArt/BeasteskitsCatalog/${name}.png`
+}
+
+function retreiveAudio(name){
+    return `../../Music/SFX/${name}.mp3`
+}
+
+function retreiveEffect(name){
+    return `../../Effects/${name}.png`
 }
