@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const maxMenuSongs = 3;    // Number of menu tracks
+const maxMenuSongs = 4;    // Number of menu tracks
 const maxBattleSongs = 3;  // Number of battle tracks
 const defaultVolume = 0.5; // Default volume for all tracks
 

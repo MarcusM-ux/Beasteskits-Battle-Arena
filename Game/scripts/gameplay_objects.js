@@ -71,11 +71,11 @@ const creatures = {
         moveset: ['BEAM', 'DECONSTRUCT', 'CLAMP', 'DASH'],
         type: 'Metal'
     },
-    Bornvee : {
-        image: retreiveImage('Bornvee'),
-        stats: {hp: 35, atk: 65, def: 30, spd: 2.5},
-        moveset: ['BEAM', 'SHADOW STEP', 'FLASH BANG','PECK'],
-        type: 'Dark'
+    Celestitoo : {
+        image: retreiveImage('Celestitoo'),
+        stats: {hp: 40, atk: 60, def: 33, spd: 1.5},
+        moveset: ['BEAM', 'FLASH BANG', 'PECK'],
+        type: 'Light'
     },
     Rockbo : {
         image: retreiveImage('Rockbo'),
@@ -101,7 +101,7 @@ const creatures = {
         stats: {hp: 80, atk: 75, def: 69, spd: 0.9},
         moveset: ['VICIOUS BITE','CHOMP', 'BODY SLAM', 'SNATCH'],
         type: 'Beast'
-    }
+    },
 }
 
 // WHEN ATTACKING

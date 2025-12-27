@@ -285,17 +285,22 @@ const attackFunctions = {
                         }
                     }
                 
-                stun(player, box.duration)
-                spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+                stun(player, 2000)
+                spawnImage('shadowtrail', box, {priority: false})
+                // spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+
                 let stun1Life = 0
                 const stunInterval1 = setInterval(()=>{
-                    spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+                    let hit = false
+                    // spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+                    spawnImage('shadowtrail', box, {priority: false})
                     if (checkCollision(box, target)) {
                         stun(target, box.duration / 2)
                         target.indicate(`${target.name} is stunned by the shadows!`)
+                        setTimeout(()=>{hit = true}, box.duration / 2)
                     }
                     stun1Life += 100
-                    if (stun1Life > box.duration){
+                    if (stun1Life > box.duration || hit){
                         clearInterval(stunInterval1)
                     }
                 }, 100)
@@ -304,14 +309,17 @@ const attackFunctions = {
                     x: player.x,
                     y: player.y,
                     width: player.width,
-                    height: player.height,
+                    height: player.height + 15,
                     color: 'black',
                     duration: 3500
                 }
-                spawnEffect(spot.x, spot.y, spot.width, spot.height, spot.color, 100)
+                // spawnEffect(spot.x, spot.y, spot.width, spot.height, spot.color, 100)
+                spawnImage('shadowtrail', spot, {priority: false})
+
                 let stun2Life = 0
                 const stunInterval2 = setInterval(()=>{
-                    spawnEffect(spot.x, spot.y, spot.width, spot.height, spot.color, 1000)
+                    // spawnEffect(spot.x, spot.y, spot.width, spot.height, spot.color, 1000)
+                    spawnImage('shadowtrail', spot, {priority: false})
                     if (checkCollision(spot, target)) {
                         stun(target, spot.duration / 2)
                         target.indicate(`${target.name} is stunned by the shadows!`)

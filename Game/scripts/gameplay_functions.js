@@ -257,7 +257,7 @@ function colorFromType(type){
             return '#cdd328'
         break
         case 'Dark':
-            return 'gray'
+            return 'rgba(39, 38, 38, 1)'
         break
         case 'Water':
             return 'blue'
