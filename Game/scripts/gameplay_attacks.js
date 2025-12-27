@@ -1273,9 +1273,9 @@ const attackFunctions = {
             box.y += 20 * speedIncrement
             speedIncrement += 0.15
 
+            playRetreivedAudio('quick-whoosh')
             spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
             if (checkCollision(box, target) && !hit){
-                playRetreivedAudio('quick-whoosh')
                 playRetreivedAudio('ominous-breathe')
                 attackResults(player, box, target)
                 stun(target, box.duration)
@@ -1361,7 +1361,7 @@ const attackFunctions = {
 
     }}, 
     ERUPT: { stats: { dmg: 3, type: 'Fire', cooldown: { time: 6000, switch: false } }, action: (player, target) => {
-                const attributes = attackFunctions.ERUPT.stats
+        const attributes = attackFunctions.ERUPT.stats
         stun(player, 5000)
 
         const flares = []
@@ -1370,6 +1370,7 @@ const attackFunctions = {
         const usedYPositions = []
         const minYSpacing = 25
 
+        playRetreivedAudio('explosion')
         for (let i = 0; i < flareCount; i++) {
             let yOffset
             let attempts = 0
@@ -1424,6 +1425,7 @@ const attackFunctions = {
                 if (checkCollision(flare, target)) {
                     rebukeCollision(flare, target, 2)
                     attackResults(player, flare, target)
+                    playRetreivedAudio('fireball')
                     flares.splice(i, 1)
                     continue
                 }

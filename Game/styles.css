@@ -241,7 +241,7 @@ a{
 .creature-box{
     width: 16rem;
     min-height: 10rem; 
-    max-height: 25rem; 
+    max-height: 35rem; 
     display: flex; 
     flex-direction: column; 
     justify-content: center; 

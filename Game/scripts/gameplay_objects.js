@@ -77,12 +77,12 @@ const creatures = {
         moveset: ['BEAM', 'FLASH BANG', 'PECK'],
         type: 'Light'
     },
-    Rockbo : {
-        image: retreiveImage('Rockbo'),
-        stats: {hp: 40, atk: 55, def: 42, spd: 1.5},
+    Chaotiboom : {
+        image: retreiveImage('Chaotiboom'),
+        stats: {hp: 40, atk: 55, def: 40, spd: 1.5},
         moveset: ['CLAMP', 'FIREWORK', 'CHARGE'],
         type: 'Metal',
-        spriteOffset: 45
+        // spriteOffset: 45
     },
     Pigment : {
         image: retreiveImage('Pigment'),
