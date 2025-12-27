@@ -121,6 +121,24 @@ canvas{
     scrollbar-color: black black;
     scrollbar-width: none;
 }
+
+#type-select-container{
+    text-align: center;
+    background-image: url('../Images/pure-card.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 2.5em;
+    width: auto;
+    height: 10em;
+    border: none;
+    background-color: transparent;
+}
+#type-select-container option{
+    color: purple;
+    background-color: black;
+}
+
 #sudden-death-timer {
     color: red;
     position: absolute;
@@ -243,9 +261,19 @@ canvas{
     padding: 0.5rem;
 }
 .type-element{
-    margin: 2rem
+    /* margin: 2rem; */
+    width: 100%;
 }
-
+.type-element p {
+    margin: 0;
+    padding: 0;
+}
+.lightblue-color {
+    color: lightblue;
+}
+.lightcoral-color {
+    color: lightcoral;
+}
 .grid-style-attacks{
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 

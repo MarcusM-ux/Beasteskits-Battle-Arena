@@ -118,3 +118,21 @@ const typeChart = {
     Beast: {strong: ['Basic'], weak: ['Air']}
     // Add Earth
 }
+
+// sa => Strong Against (This beasteskit is attack another beasteskit) (2x)
+// wa => Weak Against (This beasteskit is attack another beasteskit) (0.5x)
+// r => Resists (This beasteskit is being attack by another beasteskit)
+// s => Sensitive To (This beasteskit is attack another beasteskit)
+// const allTypes = ['Electric', 'Dark', 'Water', 'Basic', 'Fire', 'Plant', 'Air', 'Metal', 'Light', 'Beast']
+const advancedTypeChart = {
+    Basic: {sa: [''], wa: ['Metal'], r: ['Dark'], s: ['Beast']},
+    Fire: {sa: ['Plant', 'Metal', 'Dark', 'Beast'], wa: ['Water', 'Light'], r: ['Electric', 'Metal', 'Dark'], s: ['Air', 'Water']},
+    Water: {sa: ['Fire', 'Metal'], wa: ['Plant'], r: ['Plant', 'Fire', 'Metal'], s: ['Electric', 'Plant']},
+    Plant: {sa: ['Water', 'Light'], wa: ['Dark', 'Fire', 'Air'], r: ['Water', 'Light'], s: ['Fire', 'Dark', 'Air']},
+    Dark: {sa: ['Light', 'Plant'], wa: ['Basic', 'Fire', 'Light', 'Electric', 'Beast'], r: [''], s: ['Fire', 'Light']},
+    Electric: {sa: ['Beast', 'Air', 'Water', 'Metal'], wa: ['Fire'], r: ['Beast'], s: ['']},
+    Light: {sa: ['Dark'], wa: ['Plant'], r: ['Dark', 'Fire', 'Electric'], s: ['Plant']},
+    Air: {sa: ['Plant', 'Fire'], wa: ['Electric', 'Metal'], r: ['Beast'], s: ['Electric']},
+    Metal: {sa: [''], wa: ['Fire', 'Water'], r: ['Beast'], s: ['Electric', 'Fire', 'Water']},
+    Beast: {sa: ['Basic'], wa: ['Air', 'Metal'], r: ['Dark'], s: ['Electric', 'Fire']},
+}

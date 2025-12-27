@@ -6,7 +6,6 @@ function spawnEffect(x, y, width, height, color, duration = 2000){
     })
 }
 
-// const activeImages = []
 const priorityImages = []
 const secondaryImages = []
 function imageEffect(
@@ -32,16 +31,6 @@ function imageEffect(
     } else {
         secondaryImages.push(effect)
     }
-    // activeImages.push({
-    //     image,
-    //     x,
-    //     y,
-    //     width,
-    //     height,
-    //     flipX,
-    //     flipY,
-    //     expiry: Date.now() + duration
-    // })
 }
 
 function determineStatus(attackType, targetType){

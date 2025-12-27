@@ -203,14 +203,48 @@ for (const [name, data] of Object.entries(attackFunctions)) {
 
 const typeContainer = document.querySelector('#typeChartDisplay')
 const contentTypeContainer = document.querySelector('#content-type-container')
-for (const type in typeChart) {
+for (const type in advancedTypeChart) {
     const li = document.createElement('li')
-    li.style.color = 'white'
-    li.innerHTML = `<p style='color: ${colorFromType(type)}'>${type}:<p> Strong (2x) vs. ${typeChart[type].strong} | Weak (0.5x) vs. ${typeChart[type].weak}`
+    const chart = advancedTypeChart[type]
+
+    li.innerHTML = `<p style='color: ${colorFromType(type)}; background-color: black;' >${type}:</p> <br> 
+    <p class='lightcoral-color'>Strong vs. ${chart.sa} (2x) </p> <br>
+    <p class='lightblue-color'>Weak vs. ${chart.wa} (0.5x) </p> <br>`
+
     li.classList.add('type-element')
     contentTypeContainer.appendChild(li) 
 }
 
+const typeSelectContainer = document.querySelector('#type-select-container')
+typeSelectContainer.addEventListener('change', () => {
+    contentTypeContainer.replaceChildren()
+    if (typeSelectContainer.value === 'attacking') {
+
+        for (const type in advancedTypeChart) {
+            const li = document.createElement('li')
+            const chart = advancedTypeChart[type]
+
+            li.innerHTML = `<p style='color: ${colorFromType(type)}; background-color: black;' >${type}:</p> <br> 
+            <p class='lightcoral-color'>Strong vs. ${chart.sa} (2x) </p> <br>
+            <p class='lightblue-color'>Weak vs. ${chart.wa} (0.5x) </p> <br>`
+
+            li.classList.add('type-element')
+            contentTypeContainer.appendChild(li) 
+        }
+    } else {
+        for (const type in advancedTypeChart) {
+            const li = document.createElement('li')
+            const chart = advancedTypeChart[type]
+
+            li.innerHTML = `<p style='color: ${colorFromType(type)}; background-color: black;' >${type}:</p> <br> 
+            <p class='lightcoral-color'>Resistance To. ${chart.r} (0.5x) </p> <br>
+            <p class='lightblue-color'>Sensitive To. ${chart.s} (2x) </p> <br>`
+
+            li.classList.add('type-element')
+            contentTypeContainer.appendChild(li) 
+        }
+    }
+})
 const pageContainer = document.querySelector('#creature-selection-holder')
 const maxPerPage = 4
 
