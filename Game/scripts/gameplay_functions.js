@@ -6,7 +6,9 @@ function spawnEffect(x, y, width, height, color, duration = 2000){
     })
 }
 
-const activeImages = []
+// const activeImages = []
+const priorityImages = []
+const secondaryImages = []
 function imageEffect(
     image,
     x,
@@ -15,18 +17,31 @@ function imageEffect(
     height,
     duration = 2000,
     flipX = false,
-    flipY = false
+    flipY = false,
+    priority = true
 ) {
-    activeImages.push({
-        image,
-        x,
-        y,
-        width,
-        height,
-        flipX,
-        flipY,
+
+    const effect = {
+        image, x, y, width, height,
+        flipX, flipY, 
         expiry: Date.now() + duration
-    })
+    }
+
+    if (priority) {
+        priorityImages.push(effect)
+    } else {
+        secondaryImages.push(effect)
+    }
+    // activeImages.push({
+    //     image,
+    //     x,
+    //     y,
+    //     width,
+    //     height,
+    //     flipX,
+    //     flipY,
+    //     expiry: Date.now() + duration
+    // })
 }
 
 function determineStatus(attackType, targetType){
@@ -281,4 +296,44 @@ function retreiveAudio(name){
 
 function retreiveEffect(name){
     return `../../Effects/${name}.png`
+}
+
+function spawnImage(
+    imageName,
+    box,
+    {
+        playAudioOnHit = false,
+        audioName = null,
+        target = null,
+        flipX = false,
+        flipY = false,
+        priority = true
+    } = {}
+) {
+    const image = new Image()
+    image.src = retreiveEffect(imageName)
+
+    image.onload = () => {
+        imageEffect(
+            image,
+            box.x,
+            box.y,
+            box.width,
+            box.height,
+            box.duration,
+            flipX,
+            flipY,
+            priority
+        )
+    }
+
+    if (audioName) {
+        const audio = new Audio(retreiveAudio(audioName))
+
+        if (!playAudioOnHit || (target && checkCollision(box, target))) {
+            audio.play()
+        } else if (!playAudioOnHit) {
+            audio.play()
+        }
+    }
 }

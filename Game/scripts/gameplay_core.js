@@ -739,6 +739,18 @@ function drawImageEffect(effect) {
     ctx.restore()
 }
 
+function drawEffect (now, array){
+    for (let i = array.length - 1; i >= 0; i--) {
+        const effect = array[i]
+
+        if (now > effect.expiry) {
+            array.splice(i, 1)
+        } else {
+            drawImageEffect(effect)
+        }
+    }
+}
+
 function animation(){
     if (stopAnimation){
         stopAnimation = false
@@ -761,6 +773,7 @@ function animation(){
         }
     }
 
+    drawEffect(now, secondaryImages)
     players.forEach(player => {
         player.draw()
         player.borders()
@@ -775,16 +788,17 @@ function animation(){
             noCollision(player, object)
         })
     })
-    
-    for (let i = activeImages.length - 1; i >= 0; i--) {
-        const effect = activeImages[i]
+    drawEffect(now, priorityImages)
 
-        if (now > effect.expiry) {
-            activeImages.splice(i, 1)
-        } else {
-            drawImageEffect(effect)
-        }
-    }
+    // for (let i = activeImages.length - 1; i >= 0; i--) {
+    //     const effect = activeImages[i]
+
+    //     if (now > effect.expiry) {
+    //         activeImages.splice(i, 1)
+    //     } else {
+    //         drawImageEffect(effect)
+    //     }
+    // }
 
     const playerOne = challengers.player1.creature
     const playerTwo = challengers.player2.creature

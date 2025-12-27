@@ -2,21 +2,6 @@ const attackFunctions = {
     CHOMP: {stats: { dmg: 5, type: 'Dark', cooldown: { time: 5000, switch: false }}, action: (player, target) => {
             const attackStats = attackFunctions.CHOMP.stats
 
-            function spawnImage(imageName, box, {playAudioOnHit = false, audioName = null, target = null}){
-                const image = new Image()
-                image.src = retreiveEffect(imageName)
-                image.onload = () => {
-                    imageEffect(image, box.x, box.y, box.width, box.height, box.duration, !player.facingRight, false)
-                }
-                if (playAudioOnHit) {
-                    if (checkCollision(box, target)){
-                        const audio = new Audio()
-                        audio.src = retreiveAudio('bite')
-                        audio.play()
-                    }
-                }
-            }
-
             let box = {
                 x: player.x,
                 y: player.y,
@@ -39,7 +24,10 @@ const attackFunctions = {
             spawnImage('fangs', box, {
                 playAudioOnHit: true,
                 audioName: 'bite',
-                target: target
+                target: target,
+                flipX : !player.facingRight,
+                flipY: false,
+                priority: true
             })
 
             if (checkCollision(box, target)) {
@@ -51,10 +39,6 @@ const attackFunctions = {
     },
 
     DASH: {stats: { type: 'Basic', cooldown: { time: 5000, switch: false }}, action: (player) => {
-            // const img = new Image()
-            // img.src = retreiveEffect('dash')
-            // const audio = new Audio()
-            // audio.src = retreiveAudio('whoosh')
             let box = {
                 x: player.x,
                 y: player.y,
@@ -62,14 +46,14 @@ const attackFunctions = {
                 height: player.height,
                 color: 'white',
                 duration: 1000,
-                // img,
-                // audio
             }
 
+            let flipY = false
             if ((keybinds.movement.w && player.isPlayer1) || (keybinds.movement.arrowup && !player.isPlayer1)) {
                 player.y -= 64
                 box.y -= 64
                 box.height += player.height
+                flipY = true
             } else if ((keybinds.movement.s && player.isPlayer1) || (keybinds.movement.arrowdown && !player.isPlayer1)) {
                 player.y += 64
                 box.height += player.height
@@ -78,12 +62,22 @@ const attackFunctions = {
                     player.y -= 64
                     box.y -= 64
                     box.height += player.height
+                    flipY = true
                 } else {
                     player.y += 64
                     box.height += player.height
                 }
             }
-            spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+            // spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+            spawnImage('dash', box, {
+                playAudioOnHit: false,
+                audioName: 'whoosh',
+                target: null,
+                flipX: !player.facingRight,
+                flipY: flipY,
+                priority: false
+            })
+
             stun(player, box.duration / 2)
             player.indicate(`${player.name} dashed!`)
         }
@@ -344,7 +338,7 @@ const attackFunctions = {
             duration: 1000
         }
 
-        let isFacingRight = player.facingRight
+        const isFacingRight = player.facingRight
 
         if (isFacingRight){
             player.x += 15
@@ -355,7 +349,16 @@ const attackFunctions = {
         }
         stun(player, 1500)
 
-        spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+        // spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+        spawnImage('fangs', box, {
+            playAudioOnHit: true,
+            audioName: 'bite',
+            target: target,
+            flipX : !player.facingRight,
+            flipY: false,
+            priority: true
+        })
+
         if (checkCollision(box, target)){
             stun(target, 1900)
             attackResults(player, box, target)
@@ -452,26 +455,29 @@ const attackFunctions = {
     ["WIND SLASH"] : {stats: {dmg: 10, type: 'Air', cooldown: {time: 6000, switch: false}}, action : (player, target) => {
         
             const attributes = attackFunctions["WIND SLASH"].stats
-            let box = {x: player.x, y: player.y, width: 20, height: player.height + 30, dmg: attributes.dmg, duration: 3000, type: 'Air', name: 'WIND SLASH', color: 'white'}
+            let box = {x: player.x, y: player.y, width: player.width + 20, height: player.height + 30, dmg: attributes.dmg, duration: 3000, type: 'Air', name: 'WIND SLASH', color: 'white'}
 
             let airSlash = JSON.parse(JSON.stringify(box))
+            airSlash.duration = 100
 
             airSlash.x += Math.ceil(Math.random() * 25) + 1
             
-            let facingRight = player.facingRight
+            const facingRight = player.facingRight
+            const flipX = !facingRight
             
+            spawnImage('windslash', airSlash, {playAudioOnHit: false, audioName: 'whoosh', flipX, priority: true})
             let life = 0
             let airSlashInterval = setInterval(() => {
                 airSlash.x += facingRight ? 15 : -15
-                spawnEffect(airSlash.x, airSlash.y, airSlash.width, airSlash.height, airSlash.color, 100)
-
+                // spawnEffect(airSlash.x, airSlash.y, airSlash.width, airSlash.height, airSlash.color, 100)
+                spawnImage('windslash', airSlash, {playAudioOnHit: false, audioName: '', flipX, priority: true})
                 if (checkCollision(airSlash, target)) {
                     attackResults(player, airSlash, target)
                     clearInterval(airSlashInterval)
                 }
                 
                 life += 100 // Increment by the interval time
-                if (life > airSlash.duration) {
+                if (life > box.duration) {
                     clearInterval(airSlashInterval)
                 }
             }, 100)

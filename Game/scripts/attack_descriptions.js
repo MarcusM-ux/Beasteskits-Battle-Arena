@@ -1,6 +1,6 @@
 const attackDescriptions = {
     CHOMP: "A quick Dark-type bite that stuns the target for a short duration. Low damage but great for disruption.",
-    DODGE: "A defensive maneuver that teleports the player up or down to avoid incoming attacks while leaving a brief visual trail.",
+    DASH: "A defensive maneuver that teleports the player up or down to avoid incoming attacks while leaving a brief visual trail.",
     BLOAT: "A recovery move that restores 10 HP. The user is briefly vulnerable while healing.",
     PUDDLE: "Creates a shrinking Water-zone that slows anyone inside to 10% speed and deals 2 damage per tick.",
     STATIC: "An Electric discharge that stuns the user for 2s and the target for 1s. Deals 1 damage. High risk, high reward stun.",
