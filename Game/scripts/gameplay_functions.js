@@ -276,15 +276,15 @@ function colorFromType(type){
 }
 
 function retreiveImage(name){
-    return `../../PixelArt/BeasteskitsCatalog/${name}.png`
+    return `/PixelArt/BeasteskitsCatalog/${name}.png`
 }
 
 function retreiveAudio(name){
-    return `../../Music/SFX/${name}.mp3`
+    return `/Music/SFX/${name}.mp3`
 }
 
 function retreiveEffect(name){
-    return `../../Effects/${name}.png`
+    return `/Effects/${name}.png`
 }
 
 function spawnImage(

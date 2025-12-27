@@ -82,7 +82,6 @@ const creatures = {
         stats: {hp: 40, atk: 55, def: 40, spd: 1.5},
         moveset: ['CLAMP', 'FIREWORK', 'CHARGE'],
         type: 'Metal',
-        // spriteOffset: 45
     },
     Pigment : {
         image: retreiveImage('Pigment'),
