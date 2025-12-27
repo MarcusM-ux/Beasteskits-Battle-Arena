@@ -38,7 +38,7 @@ const creatures = {
     Exsis : {
         image: retreiveImage('Exsis'),
         stats: {hp: 45, atk: 56, def: 37, spd: 3},
-        moveset: ['CHOMP', 'BLOAT', 'STATIC'],
+        moveset: ['CHOMP', 'BLOAT', 'STATIC', 'ELECTRO WAVE'],
         type: 'Electric'
     },
     Bloshrimp : {

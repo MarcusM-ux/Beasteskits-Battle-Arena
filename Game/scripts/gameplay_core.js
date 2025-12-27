@@ -127,12 +127,23 @@ class Player{
                 this.keysToAttack[key].name = move
                 this.keysToAttack[key].stats = JSON.parse(JSON.stringify(attackFunctions[move].stats))}
         })
+    }
 
+    drawNameTag() {
+        ctx.font = '12px Arial'
+        ctx.textAlign = 'center'
+        ctx.fillStyle = this.isPlayer1 ? '#4aa3ff' : '#ff4a4a'
+        ctx.fillText(
+            (this.isPlayer1) ? 'Player One' : 'Player Two',
+            this.x + this.width / 2,
+            this.y - 6
+        )
     }
 
     draw(){
         ctx.save()
         //// Move "pin" to the center of the player
+        this.drawNameTag()
         ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
         
         // Rotate the player locally
