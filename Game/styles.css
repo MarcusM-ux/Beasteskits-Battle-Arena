@@ -17,6 +17,10 @@ canvas{
     border: dashed black 0.5rem;
 }
 
+a{
+    color: white;
+}
+
 #main-menu {
     width: 100vw;
     height: 100vh;
@@ -147,7 +151,7 @@ canvas{
 #winner-heading {
     color: yellow;
     display: none;
-    position: absolute;
+    /* position: absolute; */
     z-index: 2;
 }
 #page-buttons-holder{
@@ -162,10 +166,21 @@ canvas{
     display: none; 
     position: absolute; 
     z-index: 1; 
-    background-color: purple;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* CLASSES */
+.reponse{
+    border: solid black 0.5rem;
+    width: auto;
+    height: auto;
+    margin: 5rem 0 5rem 0;
+
+    padding: 1rem;
+}
 .button-frame {
     overflow: scroll;
 }
@@ -175,7 +190,7 @@ canvas{
     justify-content: center;
     align-items: center;
 
-    gap: 5rem;
+    /* gap: 5rem; */
     font-size: 3vw;
     text-align: center;
     color: lavender;
@@ -416,19 +431,19 @@ canvas{
     left: 0;
     width: 100%;
     height: 100px;
-    background-repeat: repeat-x;
-    background-size: contain;
+    /* background-repeat: repeat-x;
+    background-size: contain; */
 }
 
-/* .top {
+.top {
     top: 0.2rem;
     background-image: url('../top_decores.png');
 }
 
 .bottom {
     bottom: 0.2rem;
-    background-image: url('../bottom_decores.png');
-} */
+    /* background-image: url('../bottom_decores.png'); */
+}
 
 /* ANIMATIONS */
 .bounceIn {
@@ -451,17 +466,32 @@ canvas{
     }
 }
 
-.slideUp {
-    animation: slideUp 6.5s ease-out forwards;
+.slideToTop {
+    animation: slideToTop 2.5s ease-out;
     animation-delay: 0.5s;
     left: 50%;
     transform: translateX(-50%);
 }
-@keyframes slideUp {
+@keyframes slideToTop {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    100% {
+        transform: translate(-50%, -100vh);
+    }
+}
+
+.slideToMiddle {
+    animation: slideToMiddle 2.5s ease-out;
+    animation-delay: 0.5s;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@keyframes slideToMiddle {
     0% {
         transform: translate(-50%, 100vh);
     }
     100% {
-        transform: translate(-50%, -100vh);
+        transform: translate(-50%, 0);
     }
 }

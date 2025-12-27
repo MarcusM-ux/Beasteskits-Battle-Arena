@@ -34,12 +34,12 @@ function imageEffect(
 }
 
 function determineStatus(attackType, targetType){
-    const chart = typeChart[attackType]
+    const chart = advancedTypeChart[attackType]
     
-    if (chart.strong.includes(targetType)){
+    if (chart.sa.includes(targetType)){
         return { typeMod: 2, subEntrie: 'It was super very effective!' }
         
-    }else if (chart.weak.includes(targetType)){
+    }else if (chart.wa.includes(targetType)){
         return { typeMod: 0.5, subEntrie: 'It was not very effective...' }
         
     }else {
@@ -47,43 +47,43 @@ function determineStatus(attackType, targetType){
     }
 }
 
-function dealDamage(user, attack, target){
+function dealDamage(user, attack, target) {
     const userAttack = user.stats.atk
-    
     const attackDamage = attack.dmg
     const attackType = attack.type
-    
+
     const targetDefense = target.stats.def
     const targetType = target.type
 
     const minVariance = 0.9
     const maxVariance = 1.1
-    let randomFactor = Math.random() * (maxVariance - minVariance) + minVariance
+    const randomFactor = Math.random() * (maxVariance - minVariance) + minVariance
 
-    let entrie = ''
+    let { typeMod, subEntrie } = determineStatus(attackType, targetType)
 
-    let {typeMod, subEntrie} = determineStatus(attackType, targetType)
+    const defenseMod = 100 / (100 + targetDefense)
 
-    let defenseMod = 100 / (100 + targetDefense)
-    
-    const critChance = (Math.random() <= 0.25) ? true : false
-    let critMod = 1.9
+    const attackScaling = userAttack / (userAttack + 50) // tweak 50 for balance
+    const attackPower = attackDamage * (1 + attackScaling)
 
-    const baseDamage = attackDamage * defenseMod
-    let finalDamage = baseDamage
+    const critChance = Math.random() <= 0.25
+    const critMod = 1.9
+
+    let finalDamage = attackPower
+    finalDamage *= defenseMod
     finalDamage *= typeMod
     finalDamage *= randomFactor
-    
-    if (critChance){
+
+    if (critChance) {
         finalDamage *= critMod
         subEntrie += ' It was a critical hit!'
     }
-    
+
     finalDamage = Math.round(finalDamage)
     finalDamage = Math.max(1, finalDamage)
-    
-    entrie = `${target.name} took ${finalDamage} damage! ${subEntrie}`
-    return {message: entrie, damage: finalDamage}
+
+    const entrie = `${target.name} took ${finalDamage} damage! ${subEntrie}`
+    return { message: entrie, damage: finalDamage }
 }
 
 function checkCollision(attackBox, target){
@@ -325,4 +325,31 @@ function spawnImage(
             audio.play()
         }
     }
+}
+
+const audioCache = {}
+
+function playRetreivedAudio(name) {
+    if (!audioCache[name]) {
+        const audio = new Audio(retreiveAudio(name))
+        audio.volume = 0.5
+        audioCache[name] = audio
+    }
+
+    const audio = audioCache[name]
+    audio.currentTime = 0 // optional: restart
+    audio.play()
+}
+
+function cancelAudio(name) {
+    const audio = audioCache[name]
+    if (!audio) return
+
+    audio.pause()
+    audio.currentTime = 0
+}
+
+function handleHealth(player, amount){
+    player.stats.hp += amount
+    if (player.stats.hp > player.baseStats.hp) player.stats.hp = player.baseStats.hp
 }

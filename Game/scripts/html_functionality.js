@@ -6,6 +6,7 @@ const buttonScreen = document.querySelector('#button-frames')
 const tutorialScreen = document.querySelector('#tutorial-screen')
 const creditScreen = document.querySelector('#credit-screen')
 const attacksCatalog = document.querySelector('#attacksCatalog')
+const socialsScreen =  document.querySelector('#socials-screen')
 
 const wrappers = [creatureFrame, buttonScreen]
 
@@ -13,13 +14,15 @@ const menuLinks = [
     {button: document.querySelector('#menu-button-selection'), screen: creatureFrame, display: 'flex'},
     {button: document.querySelector('#menu-button-tutorial'), screen: tutorialScreen, wrapper: buttonScreen, display: 'block'},
     {button: document.querySelector('#menu-button-credits'), screen: creditScreen, wrapper: buttonScreen, display: 'block'},
+    {button: document.querySelector('#menu-button-socials'), screen: socialsScreen, wrapper: buttonScreen, display: 'block'},
+
 ]
 
 menuLinks.forEach(link => {
     if (link.button) {
         link.button.addEventListener('click', () => {
             mainMenu.style.display = 'none'
-            const allScreens = [tutorialScreen, creditScreen, creatureFrame]
+            const allScreens = [tutorialScreen, creditScreen, creatureFrame, socialsScreen]
             allScreens.forEach(s => {
                 if (s) s.style.display = 'none'
             })

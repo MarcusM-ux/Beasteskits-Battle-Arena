@@ -50,19 +50,19 @@ const creatures = {
     Magmos : {
         image: retreiveImage('Magmos'),
         stats: {hp: 50, atk: 70, def: 60, spd: 0.5},
-        moveset: ['CHOMP', 'DASH', 'FIREBOLT'],
+        moveset: ['CHOMP', 'DASH', 'FIREBOLT', 'ERUPT'],
         type: 'Fire'
     },
     Stressnock : {
         image: retreiveImage('Stressnock'),
         stats: {hp: 63, atk: 53, def: 62, spd: 2},
-        moveset: ['CHOMP', 'DASH', 'SHADOW STEP'],
+        moveset: ['CHOMP', 'TENTACLE SLASH', 'SHADOW STEP', 'TOTALITY'],
         type: 'Dark'
     },
     Puffblitz : {
         image: retreiveImage('Puffblitz'),
         stats: {hp: 40, atk: 35, def: 26, spd: 4},
-        moveset: ['WIND SLASH', 'WIND MILL', 'BITE', 'DASH'],
+        moveset: ['WIND SLASH', 'WIND MILL', 'CHRONIC SLAM', 'DASH'],
         type: 'Air'
     },
     Motomech : {
@@ -105,19 +105,19 @@ const creatures = {
 }
 
 // WHEN ATTACKING
-const typeChart = {
-    Electric: {strong: ['Dark', 'Water', 'Air', 'Metal', 'Beast'], weak: ['Fire', 'Light']},
-    Dark: {strong: ['Basic', 'Plant'], weak: ['Electric', 'Fire', 'Light']},
-    Water: {strong: ['Fire', 'Metal'], weak: ['Electric', 'Plant']},
-    Basic: {strong: [''], weak: ['Dark', 'Fire', 'Metal']},
-    Fire: {strong: ['Dark', 'Basic', 'Plant', 'Metal', 'Beast'], weak: ['Water', 'Air', 'Light', 'Electric']},
-    Plant : {strong: ['Water', 'Light'], weak: ['Dark', 'Fire', 'Air', 'Metal']},
-    Air: {strong: ['Fire', 'Plant'], weak: ['Dark', 'Electric']},
-    Metal: {strong: [''], weak: ['Fire', 'Electric', 'Air']},
-    Light: {strong: ['Dark'], weak: ['Electric', 'Fire', 'Plant']},
-    Beast: {strong: ['Basic'], weak: ['Air']}
-    // Add Earth
-}
+// const typeChart = {
+//     Electric: {strong: ['Dark', 'Water', 'Air', 'Metal', 'Beast'], weak: ['Fire', 'Light']},
+//     Dark: {strong: ['Basic', 'Plant'], weak: ['Electric', 'Fire', 'Light']},
+//     Water: {strong: ['Fire', 'Metal'], weak: ['Electric', 'Plant']},
+//     Basic: {strong: [''], weak: ['Dark', 'Fire', 'Metal']},
+//     Fire: {strong: ['Dark', 'Basic', 'Plant', 'Metal', 'Beast'], weak: ['Water', 'Air', 'Light', 'Electric']},
+//     Plant : {strong: ['Water', 'Light'], weak: ['Dark', 'Fire', 'Air', 'Metal']},
+//     Air: {strong: ['Fire', 'Plant'], weak: ['Dark', 'Electric']},
+//     Metal: {strong: [''], weak: ['Fire', 'Electric', 'Air']},
+//     Light: {strong: ['Dark'], weak: ['Electric', 'Fire', 'Plant']},
+//     Beast: {strong: ['Basic'], weak: ['Air']}
+//     // Add Earth
+// }
 
 // sa => Strong Against (This beasteskit is attack another beasteskit) (2x)
 // wa => Weak Against (This beasteskit is attack another beasteskit) (0.5x)
@@ -129,7 +129,7 @@ const advancedTypeChart = {
     Fire: {sa: ['Plant', 'Metal', 'Dark', 'Beast'], wa: ['Water', 'Light'], r: ['Electric', 'Metal', 'Dark'], s: ['Air', 'Water']},
     Water: {sa: ['Fire', 'Metal'], wa: ['Plant'], r: ['Plant', 'Fire', 'Metal'], s: ['Electric', 'Plant']},
     Plant: {sa: ['Water', 'Light'], wa: ['Dark', 'Fire', 'Air'], r: ['Water', 'Light'], s: ['Fire', 'Dark', 'Air']},
-    Dark: {sa: ['Light', 'Plant'], wa: ['Basic', 'Fire', 'Light', 'Electric', 'Beast'], r: [''], s: ['Fire', 'Light']},
+    Dark: {sa: ['Light', 'Plant'], wa: ['Basic', 'Fire', 'Light', 'Electric', 'Beast'], r: ['Dark'], s: ['Fire', 'Light']},
     Electric: {sa: ['Beast', 'Air', 'Water', 'Metal'], wa: ['Fire'], r: ['Beast'], s: ['']},
     Light: {sa: ['Dark'], wa: ['Plant'], r: ['Dark', 'Fire', 'Electric'], s: ['Plant']},
     Air: {sa: ['Plant', 'Fire'], wa: ['Electric', 'Metal'], r: ['Beast'], s: ['Electric']},

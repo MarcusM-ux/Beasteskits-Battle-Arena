@@ -74,7 +74,6 @@ class Player{
         this.rotation = 0
         this.spriteOffset = (data.spriteOffset || 0) * (Math.PI / 180);
         this.isPlayer1 = (value === 1) ? true : false
-        
 
         this.stats = JSON.parse(JSON.stringify(data.stats))
         this.baseStats = JSON.parse(JSON.stringify(data.stats))
@@ -375,7 +374,7 @@ for (const [name, data] of Object.entries(creatures)){
                 displayText += ` | Heal: ${attributes.heal}`
             } else {
                 // If it has neither damage nor heal, it's a utility/movement move
-                displayText += ` | Movement`
+                displayText += ` | Support`
             }
         
             li.textContent = displayText
@@ -427,8 +426,84 @@ currentPageIndex = 0
 
 const creaturebattleframe = document.querySelector('#creature-battle-frame')
 const creatureframe = document.querySelector('#creature-frame')
+
+const suddenDeathTimer = document.querySelector('#sudden-death-timer')
+let totalTime = 5 * 60 * 1000 // 5 minutes
+let sdTimer = null
+let sdActive = false
+
+function timerFormat(ms) {
+    const totalSeconds = Math.ceil(ms / 1000)
+
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds % 60
+
+    const mm = String(minutes).padStart(2, '0')
+    const ss = String(seconds).padStart(2, '0')
+
+    return `Time Until Sudden Death: ${mm}:${ss}`
+}
+
+function startSuddenDeathTimer() {
+    if (sdTimer) return // prevent duplicates
+
+    suddenDeathTimer.textContent = timerFormat(totalTime)
+
+    sdTimer = setInterval(() => {
+        totalTime -= 1000
+
+        if (totalTime <= 0) {
+            clearInterval(sdTimer)
+            sdTimer = null
+            suddenDeathTimer.textContent = '00:00'
+
+            if (!sdActive) {
+                activateSuddenDeath()
+            } else {
+                resolveSuddenDeath()
+            }
+            return
+        }
+
+        suddenDeathTimer.textContent = timerFormat(totalTime)
+    }, 1000)
+}
+
+function activateSuddenDeath() {
+    console.log('💀 SUDDEN DEATH ACTIVATED')
+    sdActive = true
+
+    const p1 = challengers.player1.creature
+    const p2 = challengers.player2.creature
+
+    ;[p1, p2].forEach(p => {
+        p.stats.hp = Math.ceil(p.baseStats.hp / 2)
+        p.updateLabel()
+        p.x = p.isPlayer1 ? 25 : 400
+        p.y = 200
+    })
+
+    // 1-minute sudden death round
+    totalTime = 1 * 60 * 1000
+    startSuddenDeathTimer()
+}
+
+function resolveSuddenDeath() {
+    const p1 = challengers.player1.creature
+    const p2 = challengers.player2.creature
+
+    if (p1.stats.hp === p2.stats.hp) {
+        console.log('⚖️ DRAW — Player 1 wins by default')
+        endBattle(false)
+    } else if (p1.stats.hp > p2.stats.hp) {
+        endBattle(false)
+    } else {
+        endBattle(true)
+    }
+}
+
 function startBattle(){
-    
+    startSuddenDeathTimer()
     document.querySelector('body').style.backgroundColor = 'white'
     document.querySelectorAll('.home-screen-button').forEach(element => {
         element.style.display = 'none'
@@ -496,7 +571,7 @@ function startBattle(){
                 }else if (keyStats.stats.dmg && !keyStats.stats.heal){
                     return `Damage: ${keyStats.stats.dmg}`
                 }else {
-                    return 'Movement'
+                    return 'Support'
                 }
             }
             
@@ -543,12 +618,17 @@ function startBattle(){
 
 let stopAnimation = false
 let animationId
-function endBattle(isPlayer1){
+function endBattle(player1Lost){
+    clearInterval(sdTimer)
+    totalTime = 5 * 60 * 1000
+    sdTimer = null
+    sdActive = false
+
     obstacles.length = 0
     const winnerHeading = document.querySelector('#winner-heading')
     winnerHeading.classList.add('bounceIn')
     winnerHeading.style.display = 'block'
-    if (isPlayer1) {
+    if (player1Lost) {
         winnerHeading.textContent = `Player Two's ${challengers.player2.creature.name} Wins!`
     } else {
         winnerHeading.textContent = `Player One's ${challengers.player1.creature.name} Wins!`
@@ -556,8 +636,13 @@ function endBattle(isPlayer1){
     toggleTHEMES(true)
 
     const darkTransition = document.querySelector('#dark-transition')
-    darkTransition.classList.add('slideUp')
-    darkTransition.style.display = 'block'
+    const image = document.querySelector('#transition-image')
+
+    image.src = (player1Lost) ? challengers.player2.creature.image.src : challengers.player1.creature.image.src
+    
+    // darkTransition.classList.remove('slideToTop')
+    darkTransition.classList.add('slideToMiddle')
+    darkTransition.style.display = 'flex'
    
     const pause = setTimeout(()=>{
 
@@ -588,9 +673,6 @@ function endBattle(isPlayer1){
             el.style.display = 'none'
         })
        
-        winnerHeading.classList.remove('bounceIn')
-        winnerHeading.style.display = 'none'
-       
         document.querySelectorAll('.home-screen-button').forEach(element => {
             element.style.display = 'block'
         })
@@ -606,11 +688,20 @@ function endBattle(isPlayer1){
     }, 4050)
 
 
-    const pause2 = setInterval(()=>{
-        darkTransition.classList.remove('slideUp')
-        darkTransition.style.display = 'none'
+    const pause2 = setTimeout(()=>{
+        darkTransition.classList.remove('slideToMiddle')
+        darkTransition.classList.add('slideToTop')
+
+        const pause3 = setTimeout(()=>{
+            darkTransition.style.display = 'none'
+            darkTransition.classList.remove('slideToTop')
+            winnerHeading.classList.remove('bounceIn')
+            winnerHeading.style.display = 'none'
+            clearTimeout(pause3)
+        }, 3000)
         clearTimeout(pause2)
-    }, 7000)
+    }, 4000)
+
 }
 
 function player1Checks(playerOne, target){

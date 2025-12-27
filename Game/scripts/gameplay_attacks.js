@@ -106,72 +106,65 @@ const attackFunctions = {
     },
 
     PUDDLE: {stats: { dmg: 2, type: 'Water', cooldown: { time: 10000, switch: false } }, action: (player, target) => {
-            let box = {
-                x: player.x,
-                y: player.y,
-                width: player.width * 3,
-                height: player.height * 3,
+            const baseWidth = player.width * 3
+            const baseHeight = player.height * 3
+
+            const centerX = player.x + player.width / 2
+            const centerY = player.y + player.height / 2
+
+            let newBox = {
+                width: baseWidth,
+                height: baseHeight,
+                x: centerX - baseWidth / 2,
+                y: centerY - baseHeight / 2,
                 color: 'lightblue',
                 duration: 2000,
                 dmg: 2,
                 type: 'Water'
             }
 
-            let factor = 0.90
-            let newBox = JSON.parse(JSON.stringify(box))
-            spawnEffect(newBox.x, newBox.y, newBox.width, newBox.height, newBox.color, newBox.duration)
-                if (checkCollision(newBox, player)) {
-                    player.maxSpeed = player.baseStats.spd * 0.1
-                } else if (!player.stunTimer) {
-                    player.maxSpeed = player.baseStats.spd
-                }
+            let factor = 0.9
 
-                // Target Damage and Slow
-                if (checkCollision(newBox, target)) {
-                    target.maxSpeed = target.baseStats.spd * 0.1
-                    
-                    let { message, damage } = dealDamage(player, newBox, target)
-                    target.stats.hp -= damage
-                    target.updateLabel()
-                    target.indicate(message)
-                    
-                } else if (!target.stunTimer) {
-                    target.maxSpeed = target.baseStats.spd
-                }
-            
+            spawnEffect(newBox.x, newBox.y, newBox.width, newBox.height, newBox.color, newBox.duration)
+            playRetreivedAudio('water-splash')
+
             const interval = setInterval(() => {
+
                 spawnEffect(newBox.x, newBox.y, newBox.width, newBox.height, newBox.color, newBox.duration)
 
-                // Self Slow
+                // Self slow
                 if (checkCollision(newBox, player)) {
                     player.maxSpeed = player.baseStats.spd * 0.1
                 } else if (!player.stunTimer) {
                     player.maxSpeed = player.baseStats.spd
                 }
 
-                // Target Damage and Slow
+                // Target slow + damage
                 if (checkCollision(newBox, target)) {
                     target.maxSpeed = target.baseStats.spd * 0.1
-                    
-                    let { message, damage } = dealDamage(player, newBox, target)
+
+                    const { message, damage } = dealDamage(player, newBox, target)
                     target.stats.hp -= damage
                     target.updateLabel()
                     target.indicate(message)
-                    
                 } else if (!target.stunTimer) {
                     target.maxSpeed = target.baseStats.spd
                 }
+
+                // Shrink
+                newBox.width *= factor
+                newBox.height *= factor
+
+                // 🔑 Re-center after shrinking
+                newBox.x = centerX - newBox.width / 2
+                newBox.y = centerY - newBox.height / 2
 
                 if (newBox.width <= 30) {
                     clearInterval(interval)
                     if (!player.stunTimer) player.maxSpeed = player.baseStats.spd
                     if (!target.stunTimer) target.maxSpeed = target.baseStats.spd
-                } else {
-                    factor -= 0.1
                 }
-                newBox.width *= factor
-                newBox.height *= factor
-                
+
             }, 2000)
         }
     },
@@ -198,6 +191,7 @@ const attackFunctions = {
             spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
 
             if (checkCollision(box, target)) {
+                playRetreivedAudio('static')
                 stun(target, box.duration)
                 
                 let { message, damage } = dealDamage(player, box, target)
@@ -209,51 +203,75 @@ const attackFunctions = {
     },
     FIREBOLT : {stats : {dmg: 8, type: 'Fire', cooldown : {time: 7000, switch: false}}, action: (player, target) => {
             const attributes = attackFunctions.FIREBOLT.stats
-            let box = {
-                x: player.x, 
-                y: player.y, 
-                width: 20, 
-                height: 20, 
+
+            const baseBox = {
+                x: player.x,
+                y: player.y,
+                width: 20,
+                height: 20,
                 dmg: attributes.dmg,
-                duration: 5000, 
-                type: 'Fire', 
+                duration: 5000,
+                type: 'Fire',
                 color: 'red'
             }
 
-            let fireBalls = Math.floor(Math.random() * 5) + 1
+            const fireBalls = Math.floor(Math.random() * 5) + 1
+            const minYSpacing = 30
+            const spawnDelay = 180 // ms between fireballs
+            const usedYPositions = []
 
-            for (let index = fireBalls; index > 0; index--){
-                let newFireball = JSON.parse(JSON.stringify(box))
+            let facingRight = player.facingRight
 
-                if (Math.random() > 0.5) {
-                    newFireball.y -= Math.ceil(Math.random() * 50) + 1
-                }else {
-                    newFireball.y += Math.ceil(Math.random() * 50) + 1
-                }
-                
-                let facingRight = player.facingRight
-                if (facingRight) {
-                    newFireball.x += player.width
-                } else {
-                    newFireball.x -= player.width
-                }
-                
+            for (let i = 0; i < fireBalls; i++) {
+            setTimeout(() => {
+
+                let newFireball = JSON.parse(JSON.stringify(baseBox))
+
+                // --- Y SPACING ---
+                let yOffset
+                let attempts = 0
+                do {
+                yOffset = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 60 + 10)
+                attempts++
+                } while (
+                usedYPositions.some(y => Math.abs(y - yOffset) < minYSpacing) &&
+                attempts < 10
+                )
+
+                usedYPositions.push(yOffset)
+                newFireball.y += yOffset
+
+                // --- X OFFSET ---
+                newFireball.x += facingRight
+                ? player.width + i * 8
+                : -player.width - i * 8
+
                 let life = 0
-                let fireBallInterval = setInterval(() => {
-                    newFireball.x += facingRight ? 15 : -15
-                    spawnEffect(newFireball.x, newFireball.y, newFireball.width, newFireball.height, 'red', 200)
+                playRetreivedAudio('fireball')
 
-                    if (checkCollision(newFireball, target)) {
-                        attackResults(player, newFireball, target)
-                        clearInterval(fireBallInterval)
-                    }
-                    
-                    life += 200 // Increment by the interval time
-                    if (life > newFireball.duration) {
-                        clearInterval(fireBallInterval)
-                    }
+                const fireBallInterval = setInterval(() => {
+                newFireball.x += facingRight ? 15 : -15
+                spawnEffect(
+                    newFireball.x,
+                    newFireball.y,
+                    newFireball.width,
+                    newFireball.height,
+                    'red',
+                    200
+                )
+
+                if (checkCollision(newFireball, target)) {
+                    attackResults(player, newFireball, target)
+                    clearInterval(fireBallInterval)
+                }
+
+                life += 200
+                if (life > newFireball.duration) {
+                    clearInterval(fireBallInterval)
+                }
                 }, 200)
 
+            }, i * spawnDelay)
             }
         }
     },
@@ -286,18 +304,23 @@ const attackFunctions = {
                     }
                 
                 stun(player, 2000)
-                spawnImage('shadowtrail', box, {priority: false})
+                spawnImage('shadowtrail', box, {audioName: 'ominous-note',priority: false})
                 // spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
 
                 let stun1Life = 0
+                let hit = false
                 const stunInterval1 = setInterval(()=>{
-                    let hit = false
                     // spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
-                    spawnImage('shadowtrail', box, {priority: false})
+                    if (hit) {
+                        spawnImage('shadowtrail', spot, {priority: false})
+                    } else {
+                        spawnImage('shadowtrail', box, {playAudioOnHit: true, target, audioName: 'ominous-breathe', priority: false})
+                    }
+
                     if (checkCollision(box, target)) {
-                        stun(target, box.duration / 2)
+                        stun(target, box.duration)
                         target.indicate(`${target.name} is stunned by the shadows!`)
-                        setTimeout(()=>{hit = true}, box.duration / 2)
+                        hit = true
                     }
                     stun1Life += 100
                     if (stun1Life > box.duration || hit){
@@ -319,9 +342,14 @@ const attackFunctions = {
                 let stun2Life = 0
                 const stunInterval2 = setInterval(()=>{
                     // spawnEffect(spot.x, spot.y, spot.width, spot.height, spot.color, 1000)
-                    spawnImage('shadowtrail', spot, {priority: false})
+                    if (hit) {
+                        spawnImage('shadowtrail', box, {priority: false})
+                    } else {
+                        spawnImage('shadowtrail', box, {playAudioOnHit: true, target, audioName: 'ominous-breathe', priority: false})
+                    }
                     if (checkCollision(spot, target)) {
                         stun(target, spot.duration / 2)
+                        hit = true
                         target.indicate(`${target.name} is stunned by the shadows!`)
                     }
                     stun2Life += 100
@@ -333,7 +361,6 @@ const attackFunctions = {
                 player.indicate(`${player.name} dodged!`)
         
     }},
-    
     BITE : {stats :{dmg: 5, type: 'Basic', cooldown : {time: 2000, switch: false}}, action: (player, target) => {
         let box = {
             x: player.x,
@@ -387,8 +414,8 @@ const attackFunctions = {
         stun(player, box.duration)
         spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
         player.stats.def += 5
-        player.stats.hp = Math.min(player.baseStats.hp, player.stats.hp + 5)
-
+        handleHealth(player, 5)
+        player.updateLabel()
         player.indicate(`${player.name} healed itself! And gained extra defense!`)
         
         
@@ -408,12 +435,14 @@ const attackFunctions = {
             spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
             if (checkCollision(box, target)) {
                 rebukeCollision(box, target, 0.5)
-                attackResults(player, box, target)            
+                attackResults(player, box, target)
+                playRetreivedAudio('finger-snap')        
             }
             if (checkCollision(box, player)) {
                 rebukeCollision(box, player, 0.5)
                 box.dmg = 1
-                attackResults(player, box, player)            
+                attackResults(player, box, player) 
+                playRetreivedAudio('finger-snap')            
             }
         }
     },
@@ -481,6 +510,7 @@ const attackFunctions = {
                 spawnImage('windslash', airSlash, {playAudioOnHit: false, audioName: '', flipX, priority: true})
                 if (checkCollision(airSlash, target)) {
                     attackResults(player, airSlash, target)
+                    rebukeCollision(airSlash, target, 2)
                     clearInterval(airSlashInterval)
                 }
                 
@@ -506,6 +536,7 @@ const attackFunctions = {
         }
         
         stun(player, box.duration)
+        playRetreivedAudio('pulse-sound')
         if (keybinds.movement.w && player.isPlayer1 ||
            keybinds.movement.arrowup && !player.isPlayer1) {
             // Shoot Beam Upwards
@@ -544,9 +575,10 @@ const attackFunctions = {
         let life = 0
         const beamInterval = setInterval(()=>{
             if (checkCollision(box, target)) {
-                rebukeCollision(box, target, 2)
+                rebukeCollision(box, target, 3)
                 stun(target, 100)
                 attackResults(player, box, target)
+                playRetreivedAudio('static')
             }
             if (life >= box.duration) {
                 clearInterval(beamInterval)
@@ -566,7 +598,8 @@ const attackFunctions = {
             color: '#586363',
             duration: 6000
         }
-        
+
+        playRetreivedAudio('drill')
         stun(player, 2600)
         let life = 0
         const interval = setInterval(()=>{
@@ -588,6 +621,7 @@ const attackFunctions = {
             player.indicate(`${player.name} boosted health, speed, and attack, significantly lowering defense!`)
             if (life > box.duration) {
                 clearInterval(interval)
+                cancelAudio('drill')
             }
         }, 2600)
     }},
@@ -632,6 +666,7 @@ const attackFunctions = {
             type: 'Metal',
             duration: 5000
         }
+        playRetreivedAudio('clamp')
         stun(player, 4000)
         spawnEffect(box.x, box.y, box.width, box.height, box.color, 101)
         
@@ -756,6 +791,7 @@ const attackFunctions = {
         }
 
         let life = 0
+        playRetreivedAudio('charging')
         const flamingStartupInterval = setInterval(()=>{
             life += 1000
             spawnEffect(player.x, player.y + player.height / 3, player.width, player.height / 2, 'red', 250)
@@ -807,7 +843,7 @@ const attackFunctions = {
             const dashDuration = 1000 
             const startTime = Date.now()
             let hasHit = false
-
+            playRetreivedAudio('fireworks')
             const directionalShoot = setInterval(() => {
                 const elapsed = Date.now() - startTime
 
@@ -856,7 +892,8 @@ const attackFunctions = {
         let rushLife = 0
         let incrementOverTime = 1.15
         let bonusDamage = 1
-        
+        playRetreivedAudio('running-sounds')
+
         const rush = setInterval(()=>{
             rushLife += 100
             player.x += (player.facingRight) ? 10 * incrementOverTime : -10 * incrementOverTime 
@@ -866,15 +903,19 @@ const attackFunctions = {
             {
                 bonusDamage = incrementOverTime
                 incrementOverTime = 1.15
-                
                 clearInterval(rush)
+
+                cancelAudio('running-sounds') 
                 stun(target, box.duration)
                 stun(player, box.duration)
 
                 target.x -= 30
 
+                playRetreivedAudio('punch')
+
                 let time = 0
                 const playtime = setInterval(()=>{
+
                     time += 100
                     if (time < 1000) {
                         target.y -= 5 * incrementOverTime
@@ -889,15 +930,16 @@ const attackFunctions = {
                     if (time > 2000) {
                         box.dmg *= bonusDamage
                         attackResults(player, box, target)
+                        playRetreivedAudio('punch')
                         clearInterval(playtime)
-                        clearInterval(rush)
                     }
                     
                 }, 100)
             }
             
-            if (rushLife > 5000 || player.x >= canvas.width - player.width){
+            if (rushLife > 5000 || player.x >= canvas.width - player.width || player.x <= 0 + 10){
                 clearInterval(rush)
+                cancelAudio('running-sounds') 
             }
         }, 100)
         // If catch player then slam them up (damage), slam them down (damage + stun)
@@ -927,16 +969,18 @@ const attackFunctions = {
             duration: 6000
         }
         
-        stun(player, 3000)
+        stun(player, 4000)
         
         let life = 0
         let attackMod = 1
         
+        player.indicate('Please press your up key to charge!')
         const charge = setInterval(()=>{
             let isPressingUp = (keybinds.movement.w && player.isPlayer1 || 
             keybinds.movement.arrowup && !player.isPlayer1)
             life += 1000
             if (isPressingUp) {
+                playRetreivedAudio('charging')
                 // stun(player, 1000)
                 spawnEffect(player.x, player.y - player.height / 2, player.width, player.height * 0.25, 'yellow', 500)
                 spawnEffect(player.x, player.y - player.height / 4.5, player.width, box.height * 0.65, 'orange', 600)
@@ -947,13 +991,13 @@ const attackFunctions = {
                 player.indicate(`${player.name} increased its attack for its next attacks!`)
             }
             
-            if (life > 3000) {
+            if (life > 4000) {
                 clearInterval(charge)
             }
         }, 1000)
 
         
-        player.indicate(`${player.name} is charged for its next attacks!`)
+        // player.indicate(`${player.name} is charged for its next attacks!`)
         setTimeout(()=>{
             player.indicate(`${player.name}'s charge fizzed out...`)
             player.stats.atk = player.baseStats.atk
@@ -1021,11 +1065,13 @@ const attackFunctions = {
                     applySlamDamage(player, target, box);
                     hit = true;
                     clearInterval(slamDown);
+                    playRetreivedAudio('body-thud')
                 }
 
                 // Stop if they hit the ground or a certain limit
                 if (player.y > canvas.height - player.height || hit) { 
                     clearInterval(slamDown);
+                    playRetreivedAudio('body-thud')
                 }
             }, 20);
         }
@@ -1069,6 +1115,7 @@ const attackFunctions = {
         
         let life = 0
         const interval = setInterval(()=>{
+            playRetreivedAudio('power-off')
             life += 2600
             stun(player, 2600)
             spawnEffect(player.x, player.y - player.height / 2, player.width, player.height * 0.25, '#173a5a', 1300)
@@ -1110,13 +1157,16 @@ const attackFunctions = {
         
         let life = 0
         let speedIncrement = 1.15
+        let hit = false
         const interval = setInterval(()=>{
             life += 100
             box.y += 20 * speedIncrement
             speedIncrement += 0.15
             spawnEffect(box.x, box.y, box.width, box.height, box.color, 101)
-            if (checkCollision(box, target)){
+            if (checkCollision(box, target) && !hit){
+                playRetreivedAudio('quick-whoosh')
                 stun(target, box.duration)
+                hit = true
             }
 
             if (life > 500) {
@@ -1153,5 +1203,245 @@ const attackFunctions = {
             }
         }
     },
-    //CHRONIC SLAM
+    TOTALITY : {stats: {type: 'Beast', cooldown: {time: 25000, switch: false}}, action: (player) => {
+        const originalType = player.type
+        const originalSize = {
+            width: player.width,
+            height: player.height
+        }
+
+        let box = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height,
+            color: 'brown',
+            type: 'Beast', 
+            duration: 1000
+        }
+
+        stun(player, box.duration)
+        player.type = 'Beast'
+
+        player.stats.hp = Math.min(player.baseStats.hp, player.stats.hp + 15)
+        player.stats.def += 30
+        player.stats.atk += 30
+        player.stats.spd += 2
+
+        playRetreivedAudio('monster-scream')
+        player.width *= 2
+        player.height *= 2
+        spawnEffect(player.x, player.y, player.width, player.height, box.color, box.duration)
+        player.indicate(`${player.name} is now a BEAST TYPE with overwhelming power!`)
+        
+        const beastTime = setTimeout(()=>{
+            player.stats = player.baseStats
+            player.type = originalType
+            player.width = originalSize.width
+            player.height = originalSize.height
+            
+            player.maxSpeed = player.baseStats.spd
+            player.indicate(`${player.name} is now back to normal...`)
+            spawnEffect(player.x, player.y, box.width, box.height, colorFromType(player.type), box.duration)
+            clearTimeout(beastTime)
+        }, 10000)
+    }},
+    ["TENTACLE SLASH"] : {stats: {dmg: 9, type: 'Dark', cooldown: {time: 5000, switch: false}}, action: (player, target) => {
+        const attributes = attackFunctions["TENTACLE SLASH"].stats
+        let box = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height / 2,
+            color: colorFromType('Dark'),
+            dmg: attributes.dmg,
+            type: attributes.type, 
+            duration: 5000
+        }
+
+        stun(player, 1000)
+        box.y -= player.height + 5
+        box.x += (player.facingRight) ? player.width + 10 : -player.width - 10
+        spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+        
+        let life = 0
+        let speedIncrement = 1.15
+        let hit = false
+
+        const interval = setInterval(()=>{
+            life += 100
+            box.y += 20 * speedIncrement
+            speedIncrement += 0.15
+
+            spawnEffect(box.x, box.y, box.width, box.height, box.color, 100)
+            if (checkCollision(box, target) && !hit){
+                playRetreivedAudio('quick-whoosh')
+                playRetreivedAudio('ominous-breathe')
+                attackResults(player, box, target)
+                stun(target, box.duration)
+                hit = true
+            }   
+
+            if (life > 500) {
+                clearInterval(interval)
+            }
+        }, 100)
+    }},
+    ["CHRONIC SLAM"] : {stats: {dmg: 10, type: 'Basic', cooldown: {time: 6000, switch: false}}, action: (player, target)=>{
+        const attributes = attackFunctions["CHRONIC SLAM"].stats
+
+        let box = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height,
+            dmg: attributes.dmg,
+            color: colorFromType(attributes.type),
+            type: attributes.type
+        }
+
+        stun(player, 1500)
+        let slamCount = 0
+        let slamDamageMod = 1.15
+        const slamDamageInc = 0.15
+        const fr = player.facingRight
+        let life = 0
+        let hit = false
+
+        const rapidSlam = setInterval(() => {
+            slamCount++
+            life += 100
+
+            // STOP at 1000ms life
+            if (life >= 500) {
+                clearInterval(rapidSlam)
+                return
+            }
+
+            // Scale damage
+            let damage = attributes.dmg * slamDamageMod
+            slamDamageMod += slamDamageInc
+
+            // Horizontal drive
+            player.x += fr ? 10 : -10
+            player.y += (slamCount % 2 === 0) ? 10 : -10
+
+            // Sync hitbox
+            box.x = player.x
+            box.y = player.y
+            box.dmg = Math.round(damage)
+
+            // Stop conditions
+            if (
+                player.x <= 10 ||
+                player.x >= canvas.width - player.width ||
+                player.stats.hp < player.baseStats.hp * 0.35
+            ) {
+                clearInterval(rapidSlam)
+                return
+            }
+
+            // Collision logic
+            if (checkCollision(player, target) && !hit) {
+                hit = true
+                stun(target, 2000)
+
+                // Main damage
+                attackResults(player, box, target)
+
+                // Chip damage after every slam
+                const chip = Math.max(1, Math.floor(target.baseStats.hp * 0.02))
+                target.stats.hp -= chip
+                target.updateLabel()
+
+                rebukeCollision(player, target, slamCount)
+            }
+
+        }, 100)
+
+    }}, 
+    ERUPT: { stats: { dmg: 3, type: 'Fire', cooldown: { time: 6000, switch: false } }, action: (player, target) => {
+                const attributes = attackFunctions.ERUPT.stats
+        stun(player, 5000)
+
+        const flares = []
+        const flareCount = 10
+
+        const usedYPositions = []
+        const minYSpacing = 25
+
+        for (let i = 0; i < flareCount; i++) {
+            let yOffset
+            let attempts = 0
+
+            do {
+                yOffset =
+                    (Math.random() > 0.5 ? 1 : -1) *
+                    (Math.random() * 60 + 10)
+                attempts++
+            } while (
+                usedYPositions.some(y => Math.abs(y - yOffset) < minYSpacing) &&
+                attempts < 10
+            )
+
+            usedYPositions.push(yOffset)
+
+            flares.push({
+                x: player.x + player.width / 2,
+                y: player.y - 30 + yOffset, // 👈 vertical separation
+                width: 20,
+                height: 20,
+                dmg: attributes.dmg,
+                type: attributes.type,
+                color: colorFromType(attributes.type),
+
+                // Direction picked ONCE
+                vx: Math.random() > 0.5 ? 4 : -4,
+                vy: Math.random() * 3 + 4
+            })
+        }
+
+        let life = 0
+        const interval = setInterval(() => {
+            life += 100
+
+            for (let i = flares.length - 1; i >= 0; i--) {
+                const flare = flares[i]
+
+                flare.x += flare.vx
+                flare.y += flare.vy
+
+                spawnEffect(
+                    flare.x,
+                    flare.y,
+                    flare.width,
+                    flare.height,
+                    flare.color,
+                    200
+                )
+
+                // ❌ Remove on target hit
+                if (checkCollision(flare, target)) {
+                    rebukeCollision(flare, target, 2)
+                    attackResults(player, flare, target)
+                    flares.splice(i, 1)
+                    continue
+                }
+
+                // ❌ Optional: remove if off-screen
+                if (
+                    flare.y > canvas.height ||
+                    flare.x < -50 ||
+                    flare.x > canvas.width + 50
+                ) {
+                    flares.splice(i, 1)
+                }
+            }
+
+            // Stop the loop when nothing is left
+            if (flares.length === 0 || life >= 2000) {
+                clearInterval(interval)
+            }
+        }, 100)
+    }}
 }
