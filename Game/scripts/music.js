@@ -9,14 +9,14 @@ const battleTHEMES = [];
 
 // --- POPULATE MENU TRACKS ---
 for (let i = 1; i <= maxMenuSongs; i++) {
-    const audio = new Audio(`/Music/THEME/Menu/theme${i}menu.mp3`);
+    const audio = new Audio(`./Music/THEME/Menu/theme${i}menu.mp3`);
     audio.volume = defaultVolume;
     menuTHEMES.push(audio);
 }
 
 // --- POPULATE BATTLE TRACKS ---
 for (let i = 1; i <= maxBattleSongs; i++) {
-    const audio = new Audio(`/Music/THEME/Battle/theme${i}battle.mp3`);
+    const audio = new Audio(`./Music/THEME/Battle/theme${i}battle.mp3`);
     audio.volume = defaultVolume;
     battleTHEMES.push(audio);
 }
