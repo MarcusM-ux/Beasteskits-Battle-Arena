@@ -103,26 +103,10 @@ const creatures = {
     },
 }
 
-// WHEN ATTACKING
-// const typeChart = {
-//     Electric: {strong: ['Dark', 'Water', 'Air', 'Metal', 'Beast'], weak: ['Fire', 'Light']},
-//     Dark: {strong: ['Basic', 'Plant'], weak: ['Electric', 'Fire', 'Light']},
-//     Water: {strong: ['Fire', 'Metal'], weak: ['Electric', 'Plant']},
-//     Basic: {strong: [''], weak: ['Dark', 'Fire', 'Metal']},
-//     Fire: {strong: ['Dark', 'Basic', 'Plant', 'Metal', 'Beast'], weak: ['Water', 'Air', 'Light', 'Electric']},
-//     Plant : {strong: ['Water', 'Light'], weak: ['Dark', 'Fire', 'Air', 'Metal']},
-//     Air: {strong: ['Fire', 'Plant'], weak: ['Dark', 'Electric']},
-//     Metal: {strong: [''], weak: ['Fire', 'Electric', 'Air']},
-//     Light: {strong: ['Dark'], weak: ['Electric', 'Fire', 'Plant']},
-//     Beast: {strong: ['Basic'], weak: ['Air']}
-//     // Add Earth
-// }
-
 // sa => Strong Against (This beasteskit is attack another beasteskit) (2x)
 // wa => Weak Against (This beasteskit is attack another beasteskit) (0.5x)
 // r => Resists (This beasteskit is being attack by another beasteskit)
 // s => Sensitive To (This beasteskit is attack another beasteskit)
-// const allTypes = ['Electric', 'Dark', 'Water', 'Basic', 'Fire', 'Plant', 'Air', 'Metal', 'Light', 'Beast']
 const advancedTypeChart = {
     Basic: {sa: [''], wa: ['Metal'], r: ['Dark'], s: ['Beast']},
     Fire: {sa: ['Plant', 'Metal', 'Dark', 'Beast'], wa: ['Water', 'Light'], r: ['Electric', 'Metal', 'Dark'], s: ['Air', 'Water']},

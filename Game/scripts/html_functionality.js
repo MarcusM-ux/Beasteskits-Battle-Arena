@@ -45,7 +45,6 @@ allExitButtons.forEach(button => {
     })
 })
 
-
 const csToggles = {
     typechart: {
         button: document.querySelector('#toggleTypeChart'),
