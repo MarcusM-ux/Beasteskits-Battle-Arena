@@ -7,7 +7,7 @@ Built as a passion project focusing on gameplay mechanics, effects, and combat f
 ---
 
 ## 🎮 Play the Game
-👉 https://YOUR_GITHUB_NAME.github.io/BBA/
+👉 https://github.com/MarcusM-ux/Beasteskits-Battle-Arena.git
 
 *(Best experienced on desktop)*
 
