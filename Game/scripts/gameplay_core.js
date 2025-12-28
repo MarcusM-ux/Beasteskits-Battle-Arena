@@ -53,7 +53,7 @@ class Obstacle {
     }
 
     draw(){
-        if (this.image.complete) {
+        if (this.image.complete && this.image.naturalWidth !== 0) {
             ctx.drawImage(
                 this.image, 
                 this.x, 
@@ -551,7 +551,7 @@ function startBattle(){
             const y = Math.random() * (canvas.height - 64)
 
             if (isPositionValid(x, y, obstacles, MIN_DISTANCE)) {
-                obstacles.push(new Obstacle('../Obstacles/block.png', x, y))
+                obstacles.push(new Obstacle('./Obstacles/block.png', x, y))
                 placed = true
                 break
             }
@@ -864,13 +864,16 @@ function drawImageEffect(effect) {
     ctx.scale(scaleX, scaleY)
 
     // Draw image centered
-    ctx.drawImage(
-        effect.image,
-        -effect.width / 2,
-        -effect.height / 2,
-        effect.width,
-        effect.height
-    )
+    if (effect.image.complete && effect.image.naturalWidth !== 0) {
+        ctx.drawImage(
+            effect.image,
+            -effect.width / 2,
+            -effect.height / 2,
+            effect.width,
+            effect.height
+        )
+    }
+    
 
     ctx.restore()
 }
