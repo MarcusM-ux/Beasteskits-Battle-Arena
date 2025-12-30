@@ -91,13 +91,14 @@ class Player{
         this.originalVelocity = this.stats.spd
         this.stunTimer = null
         
-        this.width = 64
-        this.height = 64
         this.friction = 0.9  // friction coefficient for glide slowdown
         
         this.image.onload = () => {}
         this.image.src = data.image
 
+        this.width = 70
+        this.height = 64
+        
         this.facingRight = (value === 1)
         this.blocking = false
 
