@@ -28,5 +28,6 @@ const attackDescriptions = {
     TOTALITY: "A powerful Beast transformation that massively boosts stats, increases size, and restores health for a short duration before wearing off.",
     "TENTACLE SLASH": "Summons a descending Dark appendage that strikes from above, dealing damage and heavily stunning the target.",
     "CHRONIC SLAM": "A frenzied forward assault that repeatedly slams the enemy while scaling damage over time and chipping away at their health.",
-    ERUPT: "Causes fiery debris to burst from above and scatter outward. Each flare travels independently and disappears on impact."
+    ERUPT: "Causes fiery debris to burst from above and scatter outward. Each flare travels independently and disappears on impact.",
+    "ELECTRO WAVE": "Shoots a wave of thunder bolts infront of itself, each getting stronger as they form."
 }
