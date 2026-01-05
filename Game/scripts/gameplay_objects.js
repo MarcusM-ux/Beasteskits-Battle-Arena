@@ -62,7 +62,7 @@ const creatures = {
     Deadgrace : {
         image: retreiveImage('Deadgrace'),
         stats: {hp: 53, atk: 68, def: 40, spd: 0.5},
-        moveset: ['CHOMP', 'TENTACLE SLASH', 'TOTALITY', 'FADE AWAY'],
+        moveset: ['CHOMP', 'TENTACLE SLASH', 'SHADOW STEP', 'FADE AWAY'],
         type: 'Dark'
     },
     Puffblitz : {
@@ -141,7 +141,7 @@ const creatures = {
     Bornvee : {
         image: retreiveImage('Bornvee'),
         stats: {hp: 56, atk: 52, def: 50, spd: 1.3},
-        moveset: ['FLASH BANG', 'BEAM', 'PECK'],
+        moveset: ['FLASH BANG', 'BEAM', 'PECK', 'CHOMP'],
         type: 'Dark'
     },
     Magmolt : {
@@ -153,14 +153,15 @@ const creatures = {
     Hoodfur : {
         image: retreiveImage('Hoodfur'),
         stats: {hp: 43, atk: 72, def: 40, spd: 3.5},
-        moveset: ['FIREBOLT', 'CHARGE', 'ERUPT', 'BEATDOWN'],
+        moveset: ['WIND SLASH', 'WIND MILL', 'DASH', 'BLOAT'],
         type: 'Air'
     },
     Rockbo : {
         image: retreiveImage('Rockbo'),
-        stats: {hp: 48, atk: 62, def: 55, spd: 1.6},
+        stats: {hp: 48, atk: 49, def: 50, spd: 1.6},
         moveset: ['DECONSTRUCT', 'FIREWORK', 'DASH', 'CLAMP'],
-        type: 'Metal'
+        type: 'Metal',
+        spriteOffset: 45
     }
 }
 

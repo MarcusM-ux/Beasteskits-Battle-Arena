@@ -1026,7 +1026,7 @@ const attackFunctions = {
             player.maxSpeed = player.stats.spd
             player.stats.def = player.baseStats.def
             player.opacity = 1
-            spawnEffect(box.x, box.y, box.width, box.height, box.color, box.duration)
+            spawnEffect(player.x, player.y, box.width, box.height, box.color, box.duration)
             
             if (checkCollision(box, target)){
                 stun(target, box.duration * 2)

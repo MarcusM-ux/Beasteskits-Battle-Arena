@@ -632,7 +632,7 @@ let stopAnimation = false
 let animationId
 function endBattle(player1Lost){
     clearInterval(sdTimer)
-    totalTime = 5 * 60 * 1000
+    totalTime = 2 * 60 * 1000
     sdTimer = null
     sdActive = false
 
