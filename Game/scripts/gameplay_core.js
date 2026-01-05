@@ -440,7 +440,7 @@ const creaturebattleframe = document.querySelector('#creature-battle-frame')
 const creatureframe = document.querySelector('#creature-frame')
 
 const suddenDeathTimer = document.querySelector('#sudden-death-timer')
-let totalTime = 5 * 60 * 1000 // 5 minutes
+let totalTime = 2 * 60 * 1000 // 5 minutes
 let sdTimer = null
 let sdActive = false
 
@@ -769,6 +769,7 @@ function player1Checks(playerOne, target){
                 const timeOut = setTimeout(() => {
                     playerOne.keysToAttack[attackKey].stats.cooldown.switch = false
                     desiredElement.textContent = originalText
+                    playerOne.indicate('')
                     clearTimeout(timeOut)
                 }, playerOne.keysToAttack[attackKey].stats.cooldown.time)
                
@@ -836,6 +837,7 @@ function player2Checks(playerTwo, target){
                 const timeOut = setTimeout(() => {
                     playerTwo.keysToAttack[attackKey].stats.cooldown.switch = false
                     desiredElement.textContent = originalText
+                    playerTwo.indicate('')
                     clearTimeout(timeOut)
                 }, playerTwo.keysToAttack[attackKey].stats.cooldown.time)
                

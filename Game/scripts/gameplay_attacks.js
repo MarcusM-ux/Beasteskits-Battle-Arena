@@ -1224,9 +1224,9 @@ const attackFunctions = {
         player.type = 'Beast'
 
         player.stats.hp = Math.min(player.baseStats.hp, player.stats.hp + 15)
-        player.stats.def += 30
-        player.stats.atk += 30
-        player.stats.spd += 2
+        player.stats.def += 15
+        player.stats.atk += 15
+        player.stats.spd += 0.5
 
         playRetreivedAudio('monster-scream')
         player.width *= 2

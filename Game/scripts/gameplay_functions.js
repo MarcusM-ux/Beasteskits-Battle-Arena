@@ -272,6 +272,9 @@ function colorFromType(type){
         case 'Beast':
             return 'brown'
         break
+        case 'Mind':
+            return 'pink'
+        break
     }
 }
 
