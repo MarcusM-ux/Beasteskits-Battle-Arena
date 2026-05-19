@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beasteskits Battle Arena</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <!-- <main id="loading-screen" class="loading-active">
+      <div class="loader-wrap">
+        <img src="./Images/logo.png" class="menu-logo" width="460" height="310" alt="Logo">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <p id="loading-text">Loading... 0%</p>
+      </div>
+    </main> -->
+    
+<!-- 
+    <div id='WarningScreen' class='fadeOut' style='pointer-events: none; width: 100vw; height: 100vh; position: absolute; background: black; display: flex; justify-content: center;align-items: center; z-index: 10000;'>
+        <h1 style='color: yellow;pointer-events: none;text-align: center;'>
+            <span style='font-size: 8vw; pointer-events: none;'>WARNING ⚠</span> <br>
+            THIS GAME CONTAINS FLASHING LIGHTS AND LOUD SOUNDS! <br>
+            IF YOU ARE SENSETIVE TO THOSE THINGS CLICK OFF OR PROCEDE WITH CAUTION! <br>
+            <span style='color: red; font-size: 5vw;pointer-events: none;'>YOU HAVE BEEN WARNED!</span>
+        </h1>
+    </div> -->
+
+
+    <!-- <div id='ultimate-display'>
+       <div class='ult-visual'>
+            <img class='ult-img' src='./PixelArt/BeasteskitsCatalog/Hovernet.png'>
+            <h2 class='ult-text'>TURMOIL</h2>
+       </div> 
+
+       <div class='ult-visual'>
+            <img class='ult-img' src='./PixelArt/BeasteskitsCatalog/Lummywhale.png'>
+            <h2 class='ult-text'>THE <br> SEAS!</h2>
+       </div>
+        
+    </div> -->
+            
+    <!-- MAIN MENU -->
+    <main id="main-menu" class="background-gif-img">
+        <section id="menu-holder">
+            <!-- <img src="./Images/logo.png" class="menu-logo" width="920" height="620"> -->
+            <img src="./PixelArt/BeasteskitsCatalog/Random.png" class="menu-logo-mutate popAnimation" id='creature-image-rotate' width="920" height="620">
+            
+            <div id="menu-button-container">
+                <h1 style='text-align: center;' class='gradient-text' id='versionDate'></h1> <br>
+                <h2 style='text-align: center;'  class='gradient-text' id='lastUpdated'></h2>
+                <img src='./Images/CustomizedButtons/start.png' class="menu-button" id="menu-button-play">
+                <img src='./Images/CustomizedButtons/tutorial.png' class="menu-button" id="menu-button-tutorial">
+                <img src='./Images/CustomizedButtons/socials.png' class="menu-button" id="menu-button-socials">
+                <img src='./Images/CustomizedButtons/credits.png' class="menu-button" id="menu-button-credits">
+                <img src='./Images/CustomizedButtons/updates.png' class="menu-button" id="menu-button-updates">
+                
+                <!-- <button class="menu-button" id="menu-button-play">Start</button> -->
+                <!-- <button class="menu-button" id="menu-button-tutorial">Tutorial</button> -->
+                <!-- <button class="menu-button" id="menu-button-gamemodes">Gamemodes</button> -->
+                <!-- <button class="menu-button" id="menu-button-updates">Updates</button> -->
+                <!-- <button class="menu-button" id="menu-button-credits">Credits</button> -->
+                <!-- <button class="menu-button" id="menu-button-socials">Socials</button> -->
+             </div>
+            <!-- <p style=" font-size: 1.5vw; position: absolute; bottom: 0; left: 25%; right: 1rem; width: auto; color: black;">Enjoying the game? Please rate it! <a href="https://forms.gle/yefGJSCdVLn3cFkf8" target="_blank">Beasteskits Battle Arena Feedback!</a></p> -->
+        </section>
+    </main> 
+
+    
+    <!-- MENU BUTTON FRAMES -->
+    <main id="button-frames" style="display: none;">
+    
+        <section id='tutorial-screen' class='button-frame background-fade-img'>
+            <button class='home-screen-button'>X</button>
+            
+            <div class="content">
+                <h1>BEASTESKITS BATTLE ARENA</h1>
+
+                <div class="response">
+                    Real-time 1v1 creature battles. <br>
+                    Two players. One keyboard. <br>
+                    Outplay your opponent to win. <br>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            <div class="content">
+                <h1>CONTROLS</h1>
+
+                <div class="response">
+                    Player 1 (Left Side) <br>
+                    Keys To Move: W A S D <br>
+                    Keys To Attack: Q E Z X
+                    Special Key: R
+                </div>
+
+                <div class="response">
+                    Player 2 (Right Side) <br>
+                    Kets To Move: Arrow Keys <br>
+                    Keys To Attack: O P K L
+                    Special Key: M
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="content">
+                <h1>MOVEMENT COMES FIRST</h1>
+
+                <div class="response">
+                    Use your movement keys to position your creature. <br>
+                    Good movement wins fights.
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="content">
+                <h1>ATTACKING</h1>
+
+                <div class="response">
+                    Use your attack keys to strike your opponent. <br>
+                    Each attack has different timing and range.
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="content">
+                <h1>HEALTH & WINNING</h1>
+
+                <div class="response">
+                    Hit your opponent to lower their health. <br>
+                    Reduce their health to zero to win the battle!
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="content">
+                <h1>REAL-TIME COMBAT</h1>
+
+                <div class="response">
+                    This is not turn-based. <br>
+                    Timing, spacing, and positioning matter. <br>
+                    If your opponent spams, use your moves to get the better of them!
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="content">
+                <h1>READY?</h1>
+
+                <div class="response">
+                    Continue to the Beasteskit Selection Screen and begin your battles!
+                </div>
+            </div>
+        </section>
+
+        <section id='credit-screen' class='button-frame background-fade-img'>
+            <button class='home-screen-button'>X</button>
+            
+            <div class='content'>
+                <h1>Credits</h1>
+                
+                <div class="reponse">
+                    <h3>Marcus M.</h3> - Scripter, UI Designer, Game Developer, Audio Integration <br>
+                    <h3>Aidan H.</h3> - Pixel Artist, UI Designer, Feature Designer, Audio Integration
+                </div>
+                <div class="reponse">
+                    <h2>Notable Mentions</h2>
+                    <h3>Kamari G. & Jeidyn H.</h3> - Concept Artists for Peekaboo, Beasteskit
+                    <h3>Jeidyn H.</h3> - Concept Artists for Stardust, Beasteskit
+                </div>
+                
+                <div class="reponse">
+                    <h2>Music & Sound</h2>
+                    used under respective licenses from online sound libraries: <br>
+                    <a href="https://mixkit.co/">Mixkit</a> <br>
+                    <a href="https://www.epidemicsound.com/">Epidemic Sound</a> <br>
+                    <a href="https://elements.envato.com/">Elements Envato</a> <br>
+                    <a href="https://patrickdearteaga.com/">Patrick De Arteaga</a> <br>
+                    <a href="https://soundimage.org/">Sound Image</a> <br>
+                    <a href="https://pixabay.com/">Pixabay</a> <br>
+
+                    THANK YOU ALL!
+                </div>
+
+                <div class="reponse">
+                    <h2>Special Thanks</h2> <br>
+                    Family, Friends, and Aidan
+                </div>
+
+                <div class="reponse">
+                    * Inspired by classic monster-collection and battle games
+                </div>
+                
+            </div>
+        </section>
+
+        <section id='socials-screen' class='button-frame background-fade-img'>
+            <button class='home-screen-button'>X</button>
+            
+            <div class='content'>
+                <div class="reponse flex-status-column">
+                    <h3>Youtube: <a href="https://www.youtube.com/@marco1dev" target="_blank">Marco Dev</a></h3> 
+                    <h3>Instagram: <a href="https://www.instagram.com/marcus.v1m" target="_blank">marcus.v1m</a></h3>
+                    <h3>Email: marcusjackson9430@gmail.com</a></h3> 
+                </div>
+            </div>
+        </section>
+        
+        <section id="updates-screen" class="button-frame background-fade-img">
+            <button class='home-screen-button'>X</button>
+            <div class='content'>
+            </div>  
+        </section>
+    </main>
+
+    <!-- GAMEPLAY SCREEN -->
+    <main id="play-screen" class="background-gif-img">
+        <div class="top-bar">
+            <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130">
+            <div class="play-screen-displays">
+                <h2 id="match_type">Quick Match</h2> 
+                <ul>
+                    <li id="cpu_label">NO CPU ACTIVE</li>
+                    <li id="obstacles_active">NO OBSTACLES ACTIVE</li>
+                </ul>
+            </div>
+
+            <!-- <div>
+                <h2>Coins: 0</h2>
+                <img src='./Images/coin.png'>
+            </div> -->
+            <button class="home-screen-button top-bar-close">X</button>
+        </div>
+
+        <section id="selections">
+        
+            <div id="attacksCatalog" style="display: none;">
+                <h2 class="center-text">Moves</h2>
+            
+                <div class="center-text remove-list-style" id="attacks-type-container"></div>
+            </div>
+
+             <div id='upcomingDisplay' style='display: none;'>
+                <ul id='upcoming-list'>
+                </ul>
+            </div>
+            
+            <div class='buttons-selectors'>
+                <button class="selection" id="map-selection-button">
+                    <div id='map-content'>
+                        <h2 style='-webkit-text-stroke: 1.5px black; color: white;'>Maps</h2>
+                        <h3 id="map-selected-heading">Not Selected</h3>
+                    </div>
+    
+                    <img src='' id='map-ds-image'>
+                </button>
+    
+                <button class="selection" id="beasteskit-selection-button">
+                    <h2 style=''>Beasteskits</h2>
+                    <!-- <h3 id="player-selected-heading">Player 1: Not Selected <br> Player 2: Not Selected</h3> -->
+                    <div id='beasteskit-selector'>
+                        <div>
+                            <img src='./PixelArt/BeasteskitsCatalog/Random.png' id='player1-ds-image' class='image-ds'>
+                            <h2 id='player1-heading-ds'>Player 1: <br>
+                                Not Selected
+                            </h2>
+                        </div>
+                        <h2>VS.</h2>
+                         <div>
+                            <img src='./PixelArt/BeasteskitsCatalog/Random.png' id='player2-ds-image' class='image-ds'>
+                            <h2 id='player2-heading-ds'>Player 2: <br>
+                                Not Selected
+                            </h2>
+                        </div>
+                    </div>
+                </button>
+            </div>
+             
+        </section>
+
+        <div class='gameplay-screen-buttons'>
+
+            <div class='gameplay-btn-container' id='gb-container1'>
+                <button id="ready-button" class="not-ready">READY</button>
+                
+                <!-- <button id="shop" class='gamplay-button'>
+                    <h2 style='color: tan;'>SHOP</h2>
+                    <img src='./Images/shop.png'>
+                </button>
+                 -->
+                <button id="settings-btn" class='gamplay-button'>
+                    <h2 style='color: #363636;'>SETTINGS</h2>
+                    <img src='./Images/setting.png'>
+                </button>
+    
+                <button id="compare-btn" class='gamplay-button'>
+                    <h2 style='color: black;'>COMPARE</h2>
+                    <img src='./Images/compare.png'>
+                </button>
+    
+                <button id="more-btn" class='gamplay-button' onclick='function a(){
+                    document.querySelector("#gb-container1").style.display = "none"
+                    document.querySelector("#gb-container2").style.display = "flex"
+                    
+                } a()'>
+                    <h2 style='color: white;'>OPEN</h2>
+                    <img src='./Images/more.png'>
+                </button>
+            </div>
+
+            <div class='gameplay-btn-container' id='gb-container2' style='display: none;'>
+                <button id="less-btn" class='gamplay-button'  onclick='function b(){
+                    document.querySelector("#gb-container1").style.display = "flex"
+                    document.querySelector("#gb-container2").style.display = "none"
+                    
+                } b()'>
+                    <h2 style='color: white;'>CLOSE</h2>
+                    <img src='./Images/less.png'>
+                </button>
+
+                 <button id="playlists" class='gamplay-button'>
+                    <h2 style='color: pink;'>PLAYLIST</h2>
+                    <img src='./Images/playlist.png'>
+                </button>
+                
+                <button id="fun-btn" class='gamplay-button'>
+                    <h2 style='color: #f2db67;'>FUN</h2>
+                    <img src='./Images/fun.png'>
+                 </button> 
+
+                                 
+                <button id="note-btn" class='gamplay-button'>
+                    <h2 style='color: #a1966a;'>TYPE CHART</h2>
+                    <img src='./Images/notes.png'>
+                 </button> 
+            </div>
+
+            
+        </div> 
+
+        
+    </main>
+
+    <!-- GAMEPLAY SELECTION SCREEN -->
+    <main id="selection-frames">
+        <section id="map-selection-frame" class="background-fade-img">
+
+            <div class="top-bar">
+                <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130"> 
+                <button class="return-to-playscreen top-bar-close">X</button>
+            </div>
+
+            <div id="map-catalog">
+            </div>
+        </section>
+
+        <section id="beasteskit-selection-frame" class="background-gif-img">
+            <div class="top-bar">
+                <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130">
+                <button class="return-to-playscreen top-bar-close">X</button>
+            </div>
+
+            <h2 id="selection-heading">Select Your Beasteskits</h2>
+
+            <div id="beasteskits-content-container">
+
+                <div id='popup-content' style='display: none;'>
+                    <div style='width: 100%; height: auto; display: flex; align-items: center;'>
+                    
+                    <button id='popup-exit' style='justify-self: start; cursor: pointer;'>X</button>
+                    <div style='justify-self: center; text-align: center; font-size: 1.2rem; margin-left: auto; margin-right: auto;'>
+                        <span class="w">RED => WARNING</span> <br>
+                        <span class="h">CYAN => HIGHLIGHT</span> <br>
+                        <span class="c">PURPLE => SPECIAL MECHANIC</span> <br>
+                    </div>
+                    <img class='type-image' id='popup-image' style=' margin-left: auto;'>
+                    </div>
+                    
+                    <p id='popup-description'>
+                    </p>
+                </div>
+
+                <div id='popup-player-choose' style='z-index: 999;'>
+                    <h2 style='font-size: 3em; color: black;'>SELECT PLAYER: </h2>
+                    <button id='player1-select' style='color: blue;'class='select-button'>PLAYER 1</button>
+                    <button id='player2-select'  style='color: red;'class='select-button'>PLAYER 2</button>
+                    <button id='player-select'  style='color: purple;'class='select-button'>BOTH</button>
+                    <button id='close-select'  style='color: black; background: red;'class='select-button'>X</button>
+                </div>
+
+                <div id='filter-page'>
+                    <h2>FILTER BY: </h2>
+                
+                    <div class='filter-option'>
+                        <label for='filter-type-select'>TYPE</label>
+                        <select id="filter-type-select">
+                            <option value="">All Types</option>
+                        </select>
+                    </div>
+                
+                    <div class='filter-option'>
+                        <label for='filter-class-select'>CLASS</label>
+                        <select id="filter-class-select">
+                            <option value="">All Classes</option>
+                        </select>
+                    </div>
+
+                    <div class='filter-option'>
+                        <label for='filter-ult-select'>ULTIMATES</label>
+                        <input id="filter-ult-select" type='checkbox'/>
+                    </div>
+                
+                    <div class='filter-option'>
+                        <label for='filter-stats-select'>STATS</label>
+                        <select id="filter-stats-select">
+                            <option value="">Select Stat</option>
+                        </select>
+                
+                        <select id="filter-style-select">
+                            <option value="greater">GREATER THAN: </option>
+                            <option value="less">LESS THAN: </option>
+                        </select>
+                        <input type='number' id='stat-greater-ds' placeholder="Enter value">
+                    </div>
+                
+                    <!-- NEW: FILTER ACTION BUTTONS -->
+                    <div class='filter-buttons'>
+                        <button id='apply-filter' class='filter-action-btn apply-btn'>APPLY FILTERS</button>
+                        <button id='reset-filter' class='filter-action-btn reset-btn'>RESET FILTERS</button>
+                    </div>
+                </div>
+
+
+                <div id="beasteskits-content">
+                </div>
+
+                <div id="beasteskit-stats-revealer">
+
+                    <div id='status-header'>
+                        <h2 id='name-display' class="display-status">click over beast to view stats</h2>
+                        <div class='type-content-ds'>
+                            <img id='type-img' alt='N/A' src='./Images/Types/food.png'>
+                            <h3 id='type-display' class="display-status">Type: </h3>
+                        </div>
+                        <h3 id='class-display' class="display-status">Class: </h3>
+                        <h3 id='title-display' class="display-status">Title: </h3>
+                        <img id='image-display'class="display-status" src='' alt="Beasteskit's image will appear here">
+                    </div>
+                    
+                    <div class='status-div'>
+                        <h2 class="status-heading">Attacks</h2>
+                        <h3 style='color: #262626;'>click the attacks to reveal what they do!</h3>
+                        <ul id='attacks-display'>
+                            <li class='status-list'>attack: </li>
+                            <li class='status-list'>attack: </li>
+                            <li class='status-list'>attack: </li>
+                            <li class='status-list'>attack: </li>
+                        </ul>
+                    </div>
+
+                    <div class='status-div'>
+                        <h2 class='status-heading'>Stats</h2>
+                        <ul id='status-display'>
+                            <li class='status-list'>hp: </li>
+                            <li class='status-list'>atk: </li>
+                            <li class='status-list'>def: </li>
+                            <li class='status-list'>spd: </li>
+                        </ul>
+                    </div>
+                    
+                    <div class='status-div'>
+                        <h2 class='status-heading'>Strong against: </h2>
+                        <ul id='strongVS-display'>
+                            <li class='status-list'>Fire type attacks</li>
+                            <li class='status-list'>Electric type attacks</li>
+                            <li class='status-list'>Plant type attacks</li>
+                            <li class='status-list'>Earth type attacks</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <!-- <div class='status-div' id='weakStatusDiv'>
+                        <h2 class='status-heading'>Weak when attacking...</h2>
+                        <ul id='weakVS-display'>
+                            <li class='status-list'>Fire type attacks</li>
+                            <li class='status-list'>Electric type attacks</li>
+                            <li class='status-list'>Plant type attacks</li>
+                            <li class='status-list'>Earth type attacks</li>
+                        </ul>
+                    </div>
+                     -->
+                    <div class='status-div'>
+                        <h2 class='status-heading'>Weak against...</h2>
+                        <ul id='weakAGANIST-display'>
+                            <li class='status-list'>Fire type attacks</li>
+                            <li class='status-list'>Electric type attacks</li>
+                            <li class='status-list'>Plant type attacks</li>
+                            <li class='status-list'>Earth type attacks</li>
+                        </ul>
+                    </div>
+ 
+                </div>
+            </div>
+            
+            <div id='page-buttons-holder'>
+                <button id='last-page' class='page-button bottom-radius'>Last Page</button>
+                <div id='page-count'>< 1 of 5 ></div>
+                <button id='next-page' class='page-button bottom-radius'>Next Page</button>
+                <button id='page-filter' class='page-button bottom-radius'>Filter Pages</button>
+            </div>
+
+        </section>
+
+         <div id='typeChartDisplay' style='z-index: 9999;' class='background-fade-img'>
+                <h2 class="center-text">Type Chart</h2>
+                <div class="top-bar">
+                    <!-- <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130"> -->
+                    <button class="return-to-playscreen top-bar-close">X</button>
+                </div>
+                
+                <!-- <select id="type-select-container">
+                    <option value="attacking">Attacking</option>
+                    <option value="defending">Defending</option>
+                </select>
+                 -->
+                <div class="center-text remove-list-style" id='content-type-container'>
+                </div>
+        </div>
+
+        <section id='settings-frame' class='background-fade-img'>
+                <div class="top-bar">
+                    <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130">
+                    <button class="return-to-playscreen top-bar-close" id='save-settings' style='position: relative; z-index: 9999;'>X</button>
+                </div>
+                
+            
+                <div class='settings-container'>
+
+                   <!-- ACTION BUTTONS -->
+                    <div class='settings-actions'>
+                        <!-- <button id='settings-apply' class='settings-button apply'>APPLY SETTINGS</button> -->
+                        <button id='settings-reset' style='position: relative; z-index: 9999;'class='settings-button reset'>RESET TO DEFAULT</button>
+                    </div>
+                    
+                    <!-- MATCH TYPE SECTION -->
+                    <div class='settings-section'>
+                        <div class='settings-header'>
+                            <h2>🎮 MATCH TYPE</h2>
+                            <p class='settings-subtitle'>Select your battle format</p>
+                        </div>
+            
+                        <div class='settings-content'>
+                            <div class='setting-group'>
+                                <label class='setting-label'>Match Type</label>
+                                <div class='radio-group'>
+                                    <input type='radio' name='match-type' id='quickmatch' value='quickmatch' checked>
+                                    <label for='quickmatch' class='radio-label'>
+                                        <span class='match-type-label'>QUICK MATCH (FIRST TO ONE WIN)</span>
+                                    </label>
+        
+                                    <input type='radio' name='match-type' id='tourney3' value='tourney3'>
+                                    <label for='tourney3' class='radio-label'>
+                                        <span class='match-type-label'>TOURNEY 3 (FIRST TO THREE WINS)</span>
+                                    </label>
+            
+                                    <input type='radio' name='match-type' id='bestOf3' value='bestOf3'>
+                                    <label for='bestOf3' class='radio-label'>
+                                        <span class='match-type-label'>BEST OF 3 (BEST OUT OF 3)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- OBSTACLES SECTION -->
+                    <div class='settings-section'>
+                        <div class='settings-header'>
+                            <h2>⚙️ OBSTACLES</h2>
+                            <p class='settings-subtitle'>Control environmental hazards</p>
+                        </div>
+            
+                        <div class='settings-content'>
+                            <div class='setting-group'>
+                                <label class='setting-label'>Enable Obstacles</label>
+                                <div class='radio-group'>
+                                    <input type='radio' name='obstacles' id='obstacles-on' value='on'>
+                                    <label for='obstacles-on' class='radio-label'>ON</label>
+                                    
+                                    <input type='radio' name='obstacles' id='obstacles-off' value='off' checked>
+                                    <label for='obstacles-off' class='radio-label'>OFF</label>
+                                </div>
+                            </div>
+            
+                            <div class='setting-group'>
+                                <label for='obstacles-amount-max' class='setting-label'>Max Obstacles</label>
+                                <div class='input-wrapper'>
+                                    <input type='number' id='obstacles-amount-max' max='10' min='1' value='5'>
+                                    <span class='input-hint'>1-10 obstacles</span>
+                                </div>
+                            </div>
+            
+                            <div class='setting-group checkbox-group'>
+                                <input type='checkbox' id='randomize'>
+                                <label for='randomize' class='checkbox-label'>Randomize obstacle count</label>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- CPU SECTION -->
+                    <div class='settings-section'>
+                        <div class='settings-header'>
+                            <h2>🤖 CPU SETTINGS</h2>
+                            <p class='settings-subtitle'>Configure AI opponents</p>
+                        </div>
+            
+                        <div class='settings-content'>
+                            <!-- PLAYER 1 CPU -->
+                            <div class='cpu-subsection'>
+                                <h3>Player 1 CPU</h3>
+                                
+                                <div class='setting-group checkbox-group'>
+                                    <input type='checkbox' id='player1cpu-toggle'>
+                                    <label for='player1cpu-toggle' class='checkbox-label'>Activate CPU for Player 1</label>
+                                </div>
+
+             
+                                <div class='setting-group'>
+                                    <label class='setting-label'>Difficulty Level</label>
+                                    <div class='radio-group difficulty-group'>
+                                        <input type='radio' name='difficulty-c1' id='diff-c1-simple' value='simple'>
+                                        <label for='diff-c1-simple' class='radio-label'>
+                                            <span class='difficulty-badge simple'>SIMPLE</span>
+                                        </label>
+                                        
+                                        <input type='radio' name='difficulty-c1' id='diff-c1-classic' value='classic' checked>
+                                        <label for='diff-c1-classic' class='radio-label'>
+                                            <span class='difficulty-badge classic'>CLASSIC</span>
+                                        </label>
+            
+                                        <input type='radio' name='difficulty-c1' id='diff-c1-extreme' value='extreme'>
+                                        <label for='diff-c1-extreme' class='radio-label'>
+                                            <span class='difficulty-badge extreme'>EXTREME</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <!-- DIVIDER -->
+                            <div class='settings-divider'></div>
+            
+                            <!-- PLAYER 2 CPU -->
+                            <div class='cpu-subsection'>
+                                <h3>Player 2 CPU</h3>
+                                
+                                <div class='setting-group checkbox-group'>
+                                    <input type='checkbox' id='player2cpu-toggle'>
+                                    <label for='player2cpu-toggle' class='checkbox-label'>Activate CPU for Player 2</label>
+                                </div>
+            
+                                <div class='setting-group'>
+                                    <label class='setting-label'>Difficulty Level</label>
+                                    <div class='radio-group difficulty-group'>
+                                        <input type='radio' name='difficulty-c2' id='diff-c2-simple' value='simple'>
+                                        <label for='diff-c2-simple' class='radio-label'>
+                                            <span class='difficulty-badge simple'>SIMPLE</span>
+                                        </label>
+                                        
+                                        <input type='radio' name='difficulty-c2' id='diff-c2-classic' value='classic' checked>
+                                        <label for='diff-c2-classic' class='radio-label'>
+                                            <span class='difficulty-badge classic'>CLASSIC</span>
+                                        </label>
+            
+                                        <input type='radio' name='difficulty-c2' id='diff-c2-extreme' value='extreme'>
+                                        <label for='diff-c2-extreme' class='radio-label'>
+                                            <span class='difficulty-badge extreme'>EXTREME</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  -->
+                    <div class='settings-section'>
+                        <h3>GAMEPLAY</h3>
+                         <div class='setting-group checkbox-group'>
+                            <input type='checkbox' id='ult-cooldown-start' checked>
+                            <label for='ult-cooldown-start' class='checkbox-label'>Ultimate Moves On Cooldown When Round Begins?</label>
+                        </div>
+                        
+                        <div class="volume-container setting-group">
+                            <label style='font-size: 2em;'>Volume</label>
+                            <div class="volume-slider">
+                                <div class="volume-track"></div>
+                                <div class="volume-handle"></div>
+                            </div>
+                            <span class="volume-value">100%</span>
+                        </div>
+                            
+                    </div>
+                </div>
+            
+
+                
+            </section>
+
+
+            <!-- PLAYLISTS -->
+            <section id='playlist-frame' class='background-fade-img'>
+                <div class="top-bar">
+                    <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130">
+                    <button class="return-to-playscreen top-bar-close">X</button>
+                </div>
+                <!-- <h2>CLICK THE SONG TO ADD IT TO THE TRACK</h2> -->
+            
+                <div class="playlist-container">
+                    <!-- LEFT SIDE - PLAYLIST -->
+                    <div id='soundList' class="playlist-section">
+                        <h3 style='text-align: center; font-size: 1.2em;'>YOUR PLAYLIST</h3>
+                        <button id='start-playlist'>START PLAYLIST</button>
+                        
+                    </div>
+            
+                    <!-- RIGHT SIDE - SONGS -->
+                    <div class='songsDisplay'>
+                        <div class='songChange'>
+                            <button id='menu-switch' class='songChangeBtn'>MENU OST</button>
+                            <button id='battle-switch' class='songChangeBtn'>BATTLE OST</button>
+                        </div>
+                        <ul id='songsContainer'>
+                        </ul>
+                    </div>
+                </div>
+        
+            </section>
+
+            <!-- COMPARE SECTION -->
+            <!-- stats, type, class, skills -->
+            <section id='compare-screen' class='background-fade-img'>
+                 <div class="top-bar">
+                    <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130">
+                    <button class="return-to-playscreen top-bar-close">X</button>
+                </div>
+
+                <div id='compare-content'>
+                    <!-- PLAYER 1 LEFT -->
+                    <div class='player-compare-content left'>
+                        <h2 style='color: blue;'>Player 1</h2>
+                        <h3 style='color: lavender;' id='comp1-beast-name'>NOT SELECTED</h2>
+                        <img src='./PixelArt/BeasteskitsCatalog/Random.png' id='player-comp1-img'>
+                        <h2 id='comp1-class-name'>N/A</h2>
+
+                        <ul id='comp1-hint-list' class='comp-list'>
+                            <li>Be Ready..</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class='middle'>
+                        <div class='middle-compare-content'>
+                            <h2>Type</h2>
+                            <p id='comp-type'>N/A | N/A</p>
+                        </div>
+                        <div class='middle-compare-content'>
+                            <h2>Health</h2>
+                            <p id='comp-hp'>0 | 0</p>
+                        </div>
+                        <div class='middle-compare-content'>
+                            <h2>Attack</h2>
+                            <p id='comp-atk'>0 | 0</p>
+                        </div>
+                        <div class='middle-compare-content'>
+                            <h2>Defense</h2>
+                            <p id='comp-def'>0 | 0</p>
+                        </div>
+                        <div class='middle-compare-content'>
+                            <h2>Speed</h2>
+                            <p id='comp-spd'>0 | 0</p>
+                        </div>
+                    </div>
+
+                    <!-- PLAYER 2 RIGHT -->
+                    <div class='player-compare-content right'>
+                        <h2 style='color: red;'>Player 2</h2>
+                        <h3 style='color: lavender;' id='comp2-beast-name'>NOT SELECTED</h2>
+                        <img src='./PixelArt/BeasteskitsCatalog/Random.png' id='player-comp2-img'>
+                        <h2 id='comp2-class-name'>N/A</h2>
+                        
+                        <ul id='comp2-hint-list' class='comp-list'>
+                            <!-- <li>Be Ready..</li> -->
+                        </ul>
+                    </div>
+                </div>
+
+                
+            </section>
+
+            <!-- FUN SECTION -->
+            <!-- score board, type chart, upcoming, link to forum  -->
+            <section id='fun-screen' class='button-frame' >
+                <div class="top-bar">
+                    <img class="top-bar-logo" src="./Images/logo.png" width="200" height="130"> 
+                    <button class="return-to-playscreen top-bar-close" >X</button>
+                </div>
+
+                <div id='scoreboardDisplay'>
+                    <div id='scoreboardContent'>
+                    </div>
+                </div>
+            </section> 
+    </main>
+
+    
+    <!-- BATTLE SCREEN -->
+    <div style='position: absolute; width: 100vw; height: 100vh; z-index: -1;' class='background-gif-img'> -->
+    </div>
+    
+    <main id="creature-battle-frame">
+        
+        <div class='attack-display' style="display: flex;">
+            <!-- <p class="player-heading" style="color: #4aa3ff;">Player One</p> -->
+        
+            <p id='player1-hp' class="display-health" data-hp="100">Exsis: HP 100/100</p>
+            <p id='player1-label' class="display-alert"></p>
+            
+            <div>
+                <ul id='list-attacks-player1' class='grid-style-attacks'></ul>                       
+            </div>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; align-items: center; position: relative;">
+            <h2 id="sudden-death-timer">Time Until Sudden Death: 1000</h2>
+            <h2 id="tourney" style='display: none;'>Player 1: 0 Wins |  Player 2: 0 Wins</h2>
+            <div id='round-info'>
+                <h2 id='rounds-display'><b>Player 1 Wins: 0</b> | <b>Player 2 Wins: 0</b></h2>
+                <h2 id='match-type-display'>First To 1 Win!</h2>
+            </div>
+            <h2 id='ult-battle-timer'>32 SECONDS LEFT!</h2>
+            <canvas></canvas>
+            
+            <button id='quit-button'>QUIT MATCH</button>
+        </div>
+        
+        <div class='attack-display' style="display: flex;">
+            <!-- <p class="player-heading" style="color: #ff4a4a;">Player Two</p> -->
+            
+            <p id='player2-hp' class="display-health" data-hp="100">Exsis: HP 100/100</p>
+            <p id='player2-label' class="display-alert"></p>
+            
+            <div>
+                <ul id='list-attacks-player2' class='grid-style-attacks'></ul>                       
+            </div>
+        </div>
+
+    </main>
+    <div id="dark-transition" class="background-fade-img">
+        <img id="transition-image" src="">
+        <h1 id='winner-heading'>Winner: Player One's Bloshrimp</h1>
+    </div>
+
+    <div id='ultimate-display'>
+       <!-- <div class='ult-visual'>
+            <img class='ult-img' src=''>
+       </div> -->
+    </div>
+
+    <script src="./Game/Scripts/attackLoader.js"></script>
+    <script src="./Game/Scripts/quick_attacks.js"></script>
+    
+    <script src="./Game/Scripts/music.js"></script>
+    <script src="./Game/Scripts/attack_descriptions.js"></script>
+    <script src="./Game/Scripts/gameplay_functions.js"></script>
+
+    <script src="./Game/Scripts/creature_base.js"></script>
+    <script src="./Game/Scripts/gameplay_objects.js"></script>
+    
+    <!-- <script src="./Game/scripts/gameplay_attacks.js"></script> -->
+    <script src="./Game/Scripts/maps.js"></script>
+    <script src="./Game/Scripts/settings.js"></script>
+    <script src="./Game/Scripts/compare.js"></script>
+
+    <script src="./Game/Scripts/ultimateInit.js"></script>
+    
+    <script src="./Game/Scripts/gameplay_core.js"></script>
+    <script src="./Game/Scripts/cpu_core.js"></script>
+    
+    <!-- <script src="./Game/scripts/domain_clash.js"></script> -->
+    <!-- <script src="./Game/scripts/ultimateInit.js"></script> -->
+    
+    <script src="./Game/Scripts/html_functionality.js"></script>
+    <!-- <script src="./Game/scripts/html_imp_functionality.js"></script> -->
+    <script src="./Game/Scripts/content.js"></script>
+    
+</body>
+</html>
+
